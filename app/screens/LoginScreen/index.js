@@ -4,7 +4,7 @@ import { Button, Text, TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Entypo';
 import { log } from "../../utils/logUtils";
 
-export default LoginScreen = () => {
+export default LoginScreen = ({navigation}) => {
     return (
         <View style={styles.container}>
             <TextInput
@@ -24,6 +24,7 @@ export default LoginScreen = () => {
                 mode="contained"
                 onPress={() => {
                     log("Đăng nhập");
+                    navigation.navigate('Home');
                 }}
                 >
                 Đăng nhập
