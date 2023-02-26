@@ -13,14 +13,14 @@ const DrawerItem = ({ label, onPress, tabBarTestID, type, name, notification,
       accessibilityRole="button"
       style={[styles.drawerItem, { backgroundColor: activeItemColor }]}
     >
-      <View style={styles.row}>
-        <Icon type={type} name={name} {...{ color }} />
-        <Text style={[styles.label, { color }]}>{label}</Text>
+      <View style={[styles.iconContainer, {backgroundColor: color}]}>
+        <Icon type={type} name={name} color={colors.white} />
       </View>
-      {notification > 0 && <View style={[styles.notificationBadge,
+        <Text style={[styles.label]}>{label}</Text>
+      {/* {notification > 0 && <View style={[styles.notificationBadge,
       { backgroundColor: notification > 5 ? colors.important : colors.normal }]}>
         <Text>{notification}</Text>
-      </View>}
+      </View>} */}
     </TouchableOpacity>
   )
 }
@@ -44,7 +44,7 @@ const DrawerItemList = ({ state, descriptors, navigation, styles }) => {
         {/* console.log(options) */ }
 
         const drawerItem = options.item;
-        const color = isFocused ? colors.dark : colors.darkGray;
+        // const color = isFocused ? colors.dark : colors.darkGray;
         const activeItemColor = isFocused ? colors.primary : null;
 
         return (
@@ -54,7 +54,7 @@ const DrawerItemList = ({ state, descriptors, navigation, styles }) => {
             name={drawerItem.icon}
             type={drawerItem.type}
             notification={drawerItem.notification}
-            color={color}
+            color={drawerItem.color}
             activeItemColor={activeItemColor}
             styles={styles}
           />

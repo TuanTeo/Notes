@@ -3,12 +3,12 @@ import HomeScreen from "../screens/HomeScreen";
 import { colors } from "./constant";
 
 export const ScreensArray = [
-  { route: 'Home', label: 'Home', type: Icons.Feather, icon: 'home', component: HomeScreen, notification: 0, },
-  { route: 'Inbox', label: 'My Inbox', type: Icons.Feather, icon: 'inbox', component: HomeScreen, notification: 9, },
-  { route: 'Calendar', label: 'My Calendar', type: Icons.Feather, icon: 'calendar', component: HomeScreen, notification: 4, },
-  { route: 'Documents', label: 'My Documents', type: Icons.Feather, icon: 'layers', component: HomeScreen, notification: 0, },
-  { route: 'Activity', label: 'My Activity', type: Icons.Feather, icon: 'pie-chart', component: HomeScreen, notification: 2, },
-  { route: 'Settings', label: 'Settings', type: Icons.Feather, icon: 'settings', component: HomeScreen, notification: 0, },
+  { route: 'Home', label: 'Home', type: Icons.Feather, icon: 'home', component: HomeScreen, color: colors.icon1, },
+  { route: 'Archived', label: 'Archived', type: Icons.Feather, icon: 'inbox', component: HomeScreen, color: colors.icon2, },
+  // { route: 'Calendar', label: 'My Calendar', type: Icons.Feather, icon: 'calendar', component: HomeScreen, color: colors.icon3, },
+  // { route: 'Documents', label: 'My Documents', type: Icons.Feather, icon: 'layers', component: HomeScreen, color: colors.icon4, },
+  // { route: 'Activity', label: 'My Activity', type: Icons.Feather, icon: 'pie-chart', component: HomeScreen, color: colors.primary, },
+  { route: 'Settings', label: 'Settings', type: Icons.Feather, icon: 'settings', component: HomeScreen, color: colors.important, },
 ];
 
 export const ProjectsArray = [

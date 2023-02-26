@@ -100,10 +100,10 @@ const CustomDrawer = (props) => {
     <View style={styles.container}>
       {/* header */}
       <Animated.View style={[styles.row, styles.view, styles.marginTop, viewStyles2('top')]}>
-        <View style={styles.iconContainer}>
+        {/* <View style={styles.iconContainer}>
           <Icon name="logo-electron" type={Icons.Ionicons} size={30} />
-        </View>
-        <Text style={styles.headerTitle}>Hello there👋</Text>
+        </View> */}
+        <Text style={styles.headerTitle}>Note ✏️</Text>
       </Animated.View>
       {/* Drawer List Item */}
       <Animated.ScrollView
@@ -113,7 +113,7 @@ const CustomDrawer = (props) => {
         style={[styles.marginVertical, viewStyles]}>
         <DrawerItemList {...props} styles={styles} />
         {/* 2nd menu */}
-        <View style={[styles.view, styles.marginVertical]}>
+        {/* <View style={[styles.view, styles.marginVertical]}>
           <Text>Projects 3</Text>
           <View style={styles.separator} />
           {ProjectsArray.map((_, i) => (
@@ -124,9 +124,9 @@ const CustomDrawer = (props) => {
               name={_.icon}
             />
           ))}
-        </View>
+        </View> */}
         {/* profile menu */}
-        <Animated.View style={[styles.view,
+        {/* <Animated.View style={[styles.view,
         { backgroundColor: colors.primary },
           menuStyles
         ]}>
@@ -140,14 +140,14 @@ const CustomDrawer = (props) => {
             />
           ))}
           <Text style={{ marginTop: 10 }}>v1.0.0 - Terms & Condition</Text>
-        </Animated.View>
+        </Animated.View> */}
       </Animated.ScrollView>
       {/* footer */}
       <TouchableOpacity
         onPress={fun}>
         <Animated.View
           style={[styles.row, styles.view, styles.marginBottom, viewStyles2('bottom')]}>
-          {/* <Image style={styles.profile} source={require('../../../assets/images/avatar.png')} /> */}
+          <Image style={styles.profile} source={require('../assets/images/avatar.png')} />
           <View style={styles.textContainer}>
             <Text style={styles.headerTitle}>Kelsey Van</Text>
             <Text style={styles.text}>Software Engineer</Text>
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   view: {
-    backgroundColor: colors.white,
+    // backgroundColor: colors.white,
     borderRadius: constant.borderRadius,
     marginHorizontal: constant.SPACING / 2,
     padding: constant.SPACING / 1.5,
@@ -182,8 +182,8 @@ const styles = StyleSheet.create({
   drawerItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: constant.SPACING / 2,
-    justifyContent: 'space-between',
+    // padding: constant.SPACING / 2,
+    // justifyContent: 'space-between',
     borderRadius: constant.borderRadius,
   },
   row: {
@@ -192,8 +192,10 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: constant.textFontSize,
-    color: colors.dark,
+    color: colors.white,
     paddingHorizontal: constant.SPACING,
+    // fontWeight: 'bold'
+
   },
   notificationBadge: {
     paddingVertical: constant.SPACING / 5,
@@ -214,7 +216,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: constant.titleFontSize,
-    color: colors.dark,
+    color: colors.white,
   },
   profile: {
     marginVertical: constant.SPACING / 2,
@@ -225,7 +227,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: colors.light,
   },
-  profileText: {
-    color: colors.dark,
+  text: {
+    color: colors.white,
   },
 })

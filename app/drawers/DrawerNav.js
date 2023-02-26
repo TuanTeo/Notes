@@ -13,8 +13,6 @@ const DrawerNav = () => {
       screenOptions={{
         drawerStyle: styles.drawerStyles,
         drawerType: 'slide',
-        overlayColor: 'transparent',
-        swipeEdgeWidth: Platform.OS === 'android' && 180,
       }}
       drawerContent={(props) => <CustomDrawer {...props} />}
     >
@@ -33,8 +31,8 @@ export default DrawerNav
 
 const styles = StyleSheet.create({
   drawerStyles: {
-    width: 260,
     backgroundColor: colors.sceneBg,
+    paddingTop: 30
   },
   safeArea: {
     flex: 1,
