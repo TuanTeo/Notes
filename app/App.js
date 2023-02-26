@@ -1,16 +1,13 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "./screens/HomeScreen/index.js";
 import LoginScreen from "./screens/LoginScreen/index.js";
+import 'react-native-gesture-handler';
+import DrawerNav from "./drawers/DrawerNav.js";
 
 const Stack = createNativeStackNavigator();
 
 export default App = () => {
-    // return (
-    //     <LoginScreenJs />
-    // );
-
     // Cấu hình Navigation
     return (
         <NavigationContainer>
@@ -24,8 +21,8 @@ export default App = () => {
                     component={LoginScreen}
                 />
                 <Stack.Screen 
-                    name="Home"
-                    component={HomeScreen}
+                    name="MainDrawerNav"
+                    component={DrawerNav}
                 />
             </Stack.Navigator>
         </NavigationContainer>

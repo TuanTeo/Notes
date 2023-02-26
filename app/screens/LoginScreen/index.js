@@ -24,7 +24,7 @@ export default LoginScreen = ({navigation}) => {
                 mode="contained"
                 onPress={() => {
                     log("Đăng nhập");
-                    navigation.navigate('Home');
+                    navigation.navigate('MainDrawerNav');
                 }}
                 >
                 Đăng nhập

@@ -1,8 +1,12 @@
 import React from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-export default LoginScreen = () => {
+export default HomeScreen = () => {
     return (
         <View></View>
     );
 }
+
+const styles = StyleSheet.create({
+
+});
