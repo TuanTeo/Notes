@@ -149,7 +149,7 @@ const CustomDrawer = (props) => {
           style={[styles.row, styles.view, styles.marginBottom, viewStyles2('bottom')]}>
           <Image style={styles.profile} source={require('../assets/images/avatar.png')} />
           <View style={styles.textContainer}>
-            <Text style={styles.headerTitle}>Kelsey Van</Text>
+            <Text style={styles.headerTitle}>TuanTeo</Text>
             <Text style={styles.text}>Software Engineer</Text>
           </View>
         </Animated.View>

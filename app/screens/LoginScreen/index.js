@@ -3,6 +3,7 @@ import { StyleSheet, Touchable, TouchableOpacity, View } from "react-native";
 import { Button, Text, TextInput } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Entypo';
 import { log } from "../../utils/logUtils";
+import NAVIGATION_COMPONENT from "../../utils/navConstants";
 
 export default LoginScreen = ({navigation}) => {
     return (
@@ -24,7 +25,7 @@ export default LoginScreen = ({navigation}) => {
                 mode="contained"
                 onPress={() => {
                     log("Đăng nhập");
-                    navigation.navigate('MainDrawerNav');
+                    navigation.navigate(NAVIGATION_COMPONENT.DRAWER_NAV);
                 }}
                 >
                 Đăng nhập

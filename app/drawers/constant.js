@@ -4,7 +4,7 @@ export const colors = {
   normal: '#b0e6fd',
   important: '#e892ab',
   icon1: '#ea7a72',
-  icon2: '#f8c907',
+  icon2: '#cf8df7',
   icon3: '#82a7c9',
   icon4: '#c2c5d1',
   light: '#f0f0f0',

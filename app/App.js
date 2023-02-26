@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "./screens/LoginScreen/index.js";
 import 'react-native-gesture-handler';
 import DrawerNav from "./drawers/DrawerNav.js";
+import NAVIGATION_COMPONENT from "./utils/navConstants.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,11 +18,11 @@ export default App = () => {
                 }}
             >
                 <Stack.Screen 
-                    name="Login"
+                    name={NAVIGATION_COMPONENT.LOGIN_SCREEN}
                     component={LoginScreen}
                 />
                 <Stack.Screen 
-                    name="MainDrawerNav"
+                    name={NAVIGATION_COMPONENT.DRAWER_NAV}
                     component={DrawerNav}
                 />
             </Stack.Navigator>

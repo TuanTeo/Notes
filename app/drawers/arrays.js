@@ -4,7 +4,7 @@ import { colors } from "./constant";
 
 export const ScreensArray = [
   { route: 'Notes', label: 'Notes', type: Icons.Feather, icon: 'home', component: HomeScreen, color: colors.icon1, },
-  { route: 'Archived', label: 'Archived', type: Icons.Feather, icon: 'inbox', component: HomeScreen, color: colors.icon2, },
+  { route: 'Archived', label: 'Archived', type: Icons.Feather, icon: 'archive', component: HomeScreen, color: colors.icon2, },
   { route: 'Trash', label: 'Trash', type: Icons.Feather, icon: 'trash', component: HomeScreen, color: colors.icon3, },
   // { route: 'Documents', label: 'My Documents', type: Icons.Feather, icon: 'layers', component: HomeScreen, color: colors.icon4, },
   // { route: 'Activity', label: 'My Activity', type: Icons.Feather, icon: 'pie-chart', component: HomeScreen, color: colors.primary, },
