@@ -41,7 +41,6 @@ const DrawerItemList = ({ state, descriptors, navigation, styles }) => {
             navigation.navigate(route.name);
           }
         }
-        {/* console.log(options) */ }
 
         const drawerItem = options.item;
         // const color = isFocused ? colors.dark : colors.darkGray;

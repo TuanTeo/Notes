@@ -1,7 +1,7 @@
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import React from 'react'
 import { Platform, StyleSheet } from 'react-native'
-import { ScreensArray } from './arrays';
+import { ScreensArray } from './arrays.js';
 import { colors } from './constant';
 import CustomDrawer from './CustomDrawer';
 
@@ -20,6 +20,7 @@ const DrawerNav = () => {
         <Drawer.Screen key={i} name={_.route} component={_.component}
           options={{
             item: _,
+            headerShown: false
           }}
         />
       ))}

@@ -1,27 +1,37 @@
 import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
-import { Text } from "react-native-paper";
+import { FAB, Text } from "react-native-paper";
 import { colors } from "../../drawers/constant";
+import { log } from "../../utils/logUtils";
 
-export default HomeScreen = () => {
+export default HomeScreen = ({navigation}) => {
     return (
-        <ScrollView>
-            <View style={styles.container}>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-                <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
-            </View>
-        </ScrollView>
+        <View style={styles.container}>
+            <ScrollView>
+                <View style={styles.container}>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                </View>
+            </ScrollView>
+            <FAB
+                style={styles.fab}
+                small
+                icon="plus"
+                color="white"
+                onPress={() => {log('Pressed FAB'); navigation.navigate('CreateNote');}}
+            />
+        </View>
     );
 }
 
@@ -37,5 +47,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         justifyContent: "center",
         alignItems: 'center'
+    },
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
+        marginBottom: 32,
+        backgroundColor: colors.fab,
     }
 });

@@ -16,6 +16,9 @@ export const colors = {
   active: '#05294a99',
   sceneBg: '#04567f',
   screenBg: '#05294a',
+
+  // TuanTeo
+  fab: '#0080d6ff'
 }
 
 export const constant = {
