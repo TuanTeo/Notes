@@ -4,6 +4,7 @@ import { FAB, Text } from "react-native-paper";
 import { colors } from "../../drawers/constant";
 import { log } from "../../utils/logUtils";
 import TaskItem from "../../components/task/TaskItem";
+import { ScrollView } from "react-native-gesture-handler";
 
 const CreateNoteScreen = () => {
     return (
@@ -26,12 +27,22 @@ const CreateNoteScreen = () => {
                 onPress={() => {log('Pressed FAB'); }}
             /> */}
 
-            <TaskItem text={"Task 1"} />
+            <ScrollView>
+            <TaskItem text={"Task 1 Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1"} />
             <TaskItem text={"Task 2"} />
             <TaskItem text={"Task 3"} />
             <TaskItem text={"Task 4"} />
             <TaskItem text={"Task 5"} />
             <TaskItem text={"Task 6"} />
+            <TaskItem text={"Task 6"} />
+            <TaskItem text={"Task 6"} />
+            <TaskItem text={"Task 6"} />
+            <TaskItem text={"Task 6"} />
+
+            <TaskItem text={"Task 6"} />
+            <TaskItem text={"Task 6"} />
+            <TaskItem text={"Task 6"} /><TaskItem text={"Task 6"} /><TaskItem text={"Task 6"} />
+            </ScrollView>
 
             <KeyboardAvoidingView
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -70,19 +81,18 @@ const styles = StyleSheet.create({
         backgroundColor: colors.fab,
     },
     writeTaskWrapper: {
-        position: 'absolute',
-        bottom: 10,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-around',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 10
     },
     input: {
         paddingVertical: 10,
         paddingHorizontal: 15,
         backgroundColor: '#FFF',
-        borderRadius: 60,
-        width: '70%',
+        borderRadius: 10,
+        width: '80%',
         borderColor: '#C0C0C0',
         borderWidth: 1,
     },
