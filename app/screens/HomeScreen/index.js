@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { FAB, Text } from "react-native-paper";
 import { colors } from "../../drawers/constant";
 import { log } from "../../utils/logUtils";
@@ -9,7 +9,9 @@ export default HomeScreen = ({navigation}) => {
         <View style={styles.container}>
             <ScrollView>
                 <View style={styles.container}>
-                    <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    <TouchableOpacity  onPress={() => {log('Pressed container1'); navigation.navigate('DetailNote');}} >
+                        <View style={styles.container1} ><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
+                    </TouchableOpacity>
                     <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
                     <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
                     <View style={styles.container1}><Text>HIHIHIHIHIHIHIIHIHHIIHIH</Text></View>
