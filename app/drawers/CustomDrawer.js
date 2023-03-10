@@ -1,105 +1,103 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useReducer, useRef } from 'react'
-import { useDrawerProgress } from '@react-navigation/drawer'
-import { colors, constant } from './constant'
-import Icon, { Icons } from '../components/Icons'
-import { ProfileMenu, ProjectsArray } from './arrays'
-import Animated, { interpolate, useAnimatedStyle, useDerivedValue, withSpring, withTiming } from 'react-native-reanimated'
-import DrawerItemList from './DrawerItemList'
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useReducer, useRef} from 'react';
+import {useDrawerProgress} from '@react-navigation/drawer';
+import {colors, constant} from './constant';
+import Icon, {Icons} from '../components/Icons';
+import {ProfileMenu, ProjectsArray} from './arrays';
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+  useDerivedValue,
+  withSpring,
+  withTiming,
+} from 'react-native-reanimated';
+import DrawerItemList from './DrawerItemList';
 
-
-const ProjectItem = ({
-  label, onPress, type, name,
-  activeItemColor, color }) => {
+const ProjectItem = ({label, onPress, type, name, activeItemColor, color}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.row, { backgroundColor: activeItemColor }]}
-    >
-      <View style={[styles.iconContainer, { backgroundColor: color }]}>
+      style={[styles.row, {backgroundColor: activeItemColor}]}>
+      <View style={[styles.iconContainer, {backgroundColor: color}]}>
         <Icon type={type} name={name} color={colors.white} />
       </View>
       <Text style={styles.label}>{label}</Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-const ProfileItem = ({ label, onPress, type, name }) => {
+const ProfileItem = ({label, onPress, type, name}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.row, { margin: constant.SPACING / 4 }]}>
+      style={[styles.row, {margin: constant.SPACING / 4}]}>
       <Icon type={type} name={name} color={colors.dark} />
       <Text style={styles.label}>{label}</Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
-const CustomDrawer = (props) => {
-  const { state, descriptors, navigation } = props;
-  const scrollRef = useRef(null)
+const CustomDrawer = props => {
+  const {state, descriptors, navigation} = props;
+  const scrollRef = useRef(null);
 
   const [show, toggleProfile] = useReducer(s => !s, false);
 
   const fun = () => {
-    show ? scrollRef.current.scrollTo({
-      y: 0,
-      animated: true,
-    }) : scrollRef.current.scrollToEnd({
-      animated: true,
-    })
-    toggleProfile()
-  }
+    show
+      ? scrollRef.current.scrollTo({
+          y: 0,
+          animated: true,
+        })
+      : scrollRef.current.scrollToEnd({
+          animated: true,
+        });
+    toggleProfile();
+  };
 
   const progress = useDerivedValue(() => {
     return show ? withTiming(1) : withTiming(0);
-  })
+  });
 
   const menuStyles = useAnimatedStyle(() => {
-    const scaleY = interpolate(
-      progress.value,
-      [0, 1],
-      [0, 1],
-    )
+    const scaleY = interpolate(progress.value, [0, 1], [0, 1]);
     return {
-      transform: [{ scaleY }]
-    }
-  })
+      transform: [{scaleY}],
+    };
+  });
 
   const drawerProgress = useDrawerProgress();
 
   const viewStyles = useAnimatedStyle(() => {
-    const translateX = interpolate(
-      drawerProgress.value,
-      [0, 1],
-      [-200, 0],
-    )
+    const translateX = interpolate(drawerProgress.value, [0, 1], [-200, 0]);
     return {
-      transform: [{ translateX }]
-    }
-  })
+      transform: [{translateX}],
+    };
+  });
 
-  const viewStyles2 = (type) => useAnimatedStyle(() => {
-    const val = type === 'top' ? -100 : 100;
-    const translateY = interpolate(
-      drawerProgress.value,
-      [0, 1],
-      [val, 0],
-    )
-    const opacity = interpolate(
-      drawerProgress.value,
-      [0, 1],
-      [0, 1],
-    )
-    return {
-      transform: [{ translateY }], opacity
-    }
-  })
+  const viewStyles2 = type =>
+    useAnimatedStyle(() => {
+      const val = type === 'top' ? -100 : 100;
+      const translateY = interpolate(drawerProgress.value, [0, 1], [val, 0]);
+      const opacity = interpolate(drawerProgress.value, [0, 1], [0, 1]);
+      return {
+        transform: [{translateY}],
+        opacity,
+      };
+    });
 
   return (
     <View style={styles.container}>
       {/* header */}
-      <Animated.View style={[styles.row, styles.view, styles.marginTop, viewStyles2('top')]}>
+      <Animated.View
+        style={[styles.row, styles.view, styles.marginTop, viewStyles2('top')]}>
         {/* <View style={styles.iconContainer}>
           <Icon name="logo-electron" type={Icons.Ionicons} size={30} />
         </View> */}
@@ -143,11 +141,18 @@ const CustomDrawer = (props) => {
         </Animated.View> */}
       </Animated.ScrollView>
       {/* footer */}
-      <TouchableOpacity
-        onPress={fun}>
+      <TouchableOpacity onPress={fun}>
         <Animated.View
-          style={[styles.row, styles.view, styles.marginBottom, viewStyles2('bottom')]}>
-          <Image style={styles.profile} source={require('../assets/images/avatar.png')} />
+          style={[
+            styles.row,
+            styles.view,
+            styles.marginBottom,
+            viewStyles2('bottom'),
+          ]}>
+          <Image
+            style={styles.profile}
+            source={require('../assets/images/avatar.png')}
+          />
           <View style={styles.textContainer}>
             <Text style={styles.headerTitle}>TuanTeo</Text>
             <Text style={styles.text}>Software Engineer</Text>
@@ -155,10 +160,10 @@ const CustomDrawer = (props) => {
         </Animated.View>
       </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
-export default CustomDrawer
+export default CustomDrawer;
 
 const styles = StyleSheet.create({
   container: {
@@ -195,7 +200,6 @@ const styles = StyleSheet.create({
     color: colors.white,
     paddingHorizontal: constant.SPACING,
     // fontWeight: 'bold'
-
   },
   notificationBadge: {
     paddingVertical: constant.SPACING / 5,
@@ -230,4 +234,4 @@ const styles = StyleSheet.create({
   text: {
     color: colors.white,
   },
-})
+});

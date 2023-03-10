@@ -18,8 +18,8 @@ export const colors = {
   screenBg: '#05294a',
 
   // TuanTeo
-  fab: '#0080d6ff'
-}
+  fab: '#0080d6ff',
+};
 
 export const constant = {
   SPACING: 16,
@@ -27,8 +27,4 @@ export const constant = {
   titleFontSize: 24,
   textFontSize: 16,
   subTextFontSize: 14,
-}
-
-
-
-
+};

@@ -1,8 +1,8 @@
-import { createDrawerNavigator } from '@react-navigation/drawer'
-import React from 'react'
-import { Platform, StyleSheet } from 'react-native'
-import { ScreensArray } from './arrays.js';
-import { colors } from './constant';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import React from 'react';
+import {Platform, StyleSheet} from 'react-native';
+import {ScreensArray} from './arrays.js';
+import {colors} from './constant';
 import CustomDrawer from './CustomDrawer';
 
 const Drawer = createDrawerNavigator();
@@ -14,29 +14,31 @@ const DrawerNav = () => {
         drawerStyle: styles.drawerStyles,
         drawerType: 'slide',
       }}
-      drawerContent={(props) => <CustomDrawer {...props} />}
-    >
+      drawerContent={props => <CustomDrawer {...props} />}>
       {ScreensArray.map((_, i) => (
-        <Drawer.Screen key={i} name={_.route} component={_.component}
+        <Drawer.Screen
+          key={i}
+          name={_.route}
+          component={_.component}
           options={{
             item: _,
-            headerShown: false
+            headerShown: false,
           }}
         />
       ))}
     </Drawer.Navigator>
-  )
-}
+  );
+};
 
-export default DrawerNav
+export default DrawerNav;
 
 const styles = StyleSheet.create({
   drawerStyles: {
     backgroundColor: colors.sceneBg,
-    paddingTop: 30
+    paddingTop: 30,
   },
   safeArea: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
-})
+});
