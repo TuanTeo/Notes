@@ -6,7 +6,7 @@ import {dimens} from '../../resources/dimens';
 import {log} from '../../utils/logUtils';
 import NAVIGATION_COMPONENT from '../../utils/navConstants';
 
-export default HomeScreen = ({navigation}) => {
+export default TrashScreen = ({navigation}) => {
   const noteItemOnClick = () => {
     log('Pressed container1');
     navigation.navigate(NAVIGATION_COMPONENT.DETAIL_NOTE_SCREEN);
@@ -20,16 +20,16 @@ export default HomeScreen = ({navigation}) => {
           itemOnClick={() => noteItemOnClick()}
         />
       </View>
-      <FAB
+      {/* <FAB
         style={styles.fab}
         small
         icon="plus"
         color="white"
         onPress={() => {
           log('Pressed FAB');
-          navigation.navigate(NAVIGATION_COMPONENT.CREATE_NOTE_SCREEN);
+          navigation.navigate('CreateNote');
         }}
-      />
+      /> */}
     </View>
   );
 };

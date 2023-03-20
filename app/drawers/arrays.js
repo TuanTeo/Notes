@@ -1,12 +1,14 @@
 import {Icons} from '../components/Icons';
-// import HomeScreen from "../screens/HomeScreen";
+import ArchivedNavigator from '../navigations/ArchivedNavigator';
 import HomeNavigator from '../navigations/HomeNavigator.js';
+import TrashNavigator from '../navigations/TrashNavigator';
+import SettingScreen from '../screens/settingscreen/SettingScreen';
 import {colors} from './constant';
 
 export const ScreensArray = [
   {
-    route: 'Notes',
-    label: 'Notes',
+    route: 'Home',
+    label: 'Home',
     type: Icons.Feather,
     icon: 'home',
     component: HomeNavigator,
@@ -17,7 +19,7 @@ export const ScreensArray = [
     label: 'Archived',
     type: Icons.Feather,
     icon: 'archive',
-    component: HomeNavigator,
+    component: ArchivedNavigator,
     color: colors.icon2,
   },
   {
@@ -25,7 +27,7 @@ export const ScreensArray = [
     label: 'Trash',
     type: Icons.Feather,
     icon: 'trash',
-    component: HomeNavigator,
+    component: TrashNavigator,
     color: colors.icon3,
   },
   // { route: 'Documents', label: 'My Documents', type: Icons.Feather, icon: 'layers', component: HomeScreen, color: colors.icon4, },
@@ -35,7 +37,7 @@ export const ScreensArray = [
     label: 'Settings',
     type: Icons.Feather,
     icon: 'settings',
-    component: HomeNavigator,
+    component: SettingScreen,
     color: colors.important,
   },
 ];

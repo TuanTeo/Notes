@@ -1,13 +1,13 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import HomeScreen from '../screens/HomeScreen';
+
 import DetailScreen from '../screens/detailscreen/DetailScreen';
-import CreateNoteScreen from '../screens/createnotescreen/CreateNoteScreen';
+import TrashScreen from '../screens/trashscreen/TrashScreen';
 import NAVIGATION_COMPONENT from '../utils/navConstants';
 
 const Stack = createNativeStackNavigator();
 
-const HomeNavigator = () => {
+const TrashNavigator = () => {
   return (
     <Stack.Navigator
     // screenOptions={{
@@ -15,12 +15,8 @@ const HomeNavigator = () => {
     // }}
     >
       <Stack.Screen
-        name={NAVIGATION_COMPONENT.HOME_SCREEN}
-        component={HomeScreen}
-      />
-      <Stack.Screen
-        name={NAVIGATION_COMPONENT.CREATE_NOTE_SCREEN}
-        component={CreateNoteScreen}
+        name={NAVIGATION_COMPONENT.TRASH_SCREEN}
+        component={TrashScreen}
       />
       <Stack.Screen
         name={NAVIGATION_COMPONENT.DETAIL_NOTE_SCREEN}
@@ -30,4 +26,4 @@ const HomeNavigator = () => {
   );
 };
 
-export default HomeNavigator;
+export default TrashNavigator;
