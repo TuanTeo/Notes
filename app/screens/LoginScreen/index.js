@@ -1,9 +1,11 @@
 import React from 'react';
 import {StyleSheet, Touchable, TouchableOpacity, View} from 'react-native';
+import ReactNativeBiometrics, {BiometryTypes} from 'react-native-biometrics';
 import {Button, Text, TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Entypo';
 import {log} from '../../utils/logUtils';
 import NAVIGATION_COMPONENT from '../../utils/navConstants';
+import FingerprintScanner from 'react-native-fingerprint-scanner';
 
 export default LoginScreen = ({navigation}) => {
   return (
@@ -29,6 +31,62 @@ export default LoginScreen = ({navigation}) => {
           style={styles.fingerButton}
           onPress={() => {
             log('Fingerprint');
+
+            const rnBiometrics = new ReactNativeBiometrics();
+
+            rnBiometrics.isSensorAvailable().then(resultObject => {
+              const {available, biometryType} = resultObject;
+
+              if (available && biometryType === BiometryTypes.TouchID) {
+                console.log('TouchID is supported');
+              } else if (available && biometryType === BiometryTypes.FaceID) {
+                console.log('FaceID is supported');
+              } else if (
+                available &&
+                biometryType === BiometryTypes.Biometrics
+              ) {
+                console.log('Biometrics is supported');
+
+                // Check đã có key chưa
+                rnBiometrics.biometricKeysExist().then(resultObject => {
+                  const {keysExist} = resultObject;
+
+                  if (keysExist) {
+                    console.log('Keys exist');
+                    // Nếu chưa thì sinh key
+                    FingerprintScanner.authenticate({
+                      description: 'Authenticate to access this',
+                    })
+                      .then(() => {
+                        // Method for Authentication
+                        // onAuthenticate();
+                        console.log('FingerprintScanner ok');
+                      })
+                      // Call error method
+                      .catch(error => {
+                        console.log('FingerprintScanner error');
+                        onAuthenticationFailure(error);
+                      });
+                  } else {
+                    console.log('Keys do not exist or were deleted');
+
+                    // Nếu chưa thì sinh key
+                    FingerprintScanner.authenticate({
+                      description: 'Authenticate to access this',
+                    })
+                      .then(() => {
+                        // Method for Authentication
+                        // onAuthenticate();
+                        console.log('FingerprintScanner ok');
+                      })
+                      // Call error method
+                      .catch(error => onAuthenticationFailure(error));
+                  }
+                });
+              } else {
+                console.log('Biometrics not supported');
+              }
+            });
           }}>
           <Icon name="fingerprint" size={30} color="#6200ff" />
         </TouchableOpacity>
