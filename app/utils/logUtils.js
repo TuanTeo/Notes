@@ -1,5 +1,7 @@
 function log(mess) {
-  console.log(mess);
+  if (__DEV__) {
+    console.log(mess);
+  }
 }
 
 export {log};

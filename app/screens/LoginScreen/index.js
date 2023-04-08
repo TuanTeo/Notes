@@ -5,9 +5,33 @@ import {Button, Text, TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Entypo';
 import {log} from '../../utils/logUtils';
 import NAVIGATION_COMPONENT from '../../utils/navConstants';
-import FingerprintScanner from 'react-native-fingerprint-scanner';
+import {createMessageSignature, verifyMessageSignature} from "../../utils/secretUtils";
 
 export default LoginScreen = ({navigation}) => {
+  const rnBiometrics = new ReactNativeBiometrics();
+
+  function getBiometricSignature() {
+    // Todo sinh signature biometric va gui len server, luu lai vao store de dung sau
+    rnBiometrics.createSignature({
+      promptMessage: 'Đăng nhập',
+      payload: '5'
+    })
+      .then((resultObject) => {
+        const {success, signature} = resultObject
+
+        if (success) {
+          console.log('signature: ' + signature)
+          createMessageSignature(signature)
+            .then(encode => {
+              /* Da co chu ky su dung private key */
+              log("encode: " + encode)
+              verifyMessageSignature(signature, encode)
+                .then(result => { log('verify:' + result) })
+            })
+        }
+      })
+  }
+
   return (
     <View style={styles.container}>
       <TextInput style={styles.text_input} label="Email" mode="outlined" />
@@ -32,57 +56,18 @@ export default LoginScreen = ({navigation}) => {
           onPress={() => {
             log('Fingerprint');
 
-            const rnBiometrics = new ReactNativeBiometrics();
-
             rnBiometrics.isSensorAvailable().then(resultObject => {
               const {available, biometryType} = resultObject;
 
               if (available && biometryType === BiometryTypes.TouchID) {
                 console.log('TouchID is supported');
+                getBiometricSignature()
               } else if (available && biometryType === BiometryTypes.FaceID) {
                 console.log('FaceID is supported');
-              } else if (
-                available &&
-                biometryType === BiometryTypes.Biometrics
-              ) {
+                getBiometricSignature()
+              } else if (available && biometryType === BiometryTypes.Biometrics) {
                 console.log('Biometrics is supported');
-
-                // Check đã có key chưa
-                rnBiometrics.biometricKeysExist().then(resultObject => {
-                  const {keysExist} = resultObject;
-
-                  if (keysExist) {
-                    console.log('Keys exist');
-                    // Nếu chưa thì sinh key
-                    FingerprintScanner.authenticate({
-                      description: 'Authenticate to access this',
-                    })
-                      .then(() => {
-                        // Method for Authentication
-                        // onAuthenticate();
-                        console.log('FingerprintScanner ok');
-                      })
-                      // Call error method
-                      .catch(error => {
-                        console.log('FingerprintScanner error');
-                        onAuthenticationFailure(error);
-                      });
-                  } else {
-                    console.log('Keys do not exist or were deleted');
-
-                    // Nếu chưa thì sinh key
-                    FingerprintScanner.authenticate({
-                      description: 'Authenticate to access this',
-                    })
-                      .then(() => {
-                        // Method for Authentication
-                        // onAuthenticate();
-                        console.log('FingerprintScanner ok');
-                      })
-                      // Call error method
-                      .catch(error => onAuthenticationFailure(error));
-                  }
-                });
+                getBiometricSignature()
               } else {
                 console.log('Biometrics not supported');
               }
