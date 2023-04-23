@@ -1,17 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FAB, Text} from 'react-native-paper';
 import {colors} from '../../drawers/constant';
 import {dimens} from '../../resources/dimens';
 import {log} from '../../utils/logUtils';
 import NAVIGATION_COMPONENT from '../../utils/navConstants';
+import {observer} from 'mobx-react-lite';
+import {useUserStore} from '../../stores/userStore';
 
-export default HomeScreen = ({navigation}) => {
+export default HomeScreen = observer(({navigation}) => {
+  const userStore = useUserStore();
   const noteItemOnClick = () => {
     log('Pressed container1');
     navigation.navigate(NAVIGATION_COMPONENT.DETAIL_NOTE_SCREEN);
   };
-
+  useEffect(() => {
+    console.log('user', userStore.user);
+  }, []);
+  console.log('ttttttt');
   return (
     <View style={styles.container}>
       <View style={styles.container}>
@@ -32,7 +39,7 @@ export default HomeScreen = ({navigation}) => {
       />
     </View>
   );
-};
+});
 
 const ListNote = props => {
   return (
