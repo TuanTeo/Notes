@@ -53,7 +53,7 @@ const DrawerItemList = ({state, descriptors, navigation, styles}) => {
         // const color = isFocused ? colors.dark : colors.darkGray;
         const activeItemColor = isFocused ? colors.primary : null;
 
-        return (
+        return index === 4 ? null : (
           <DrawerItem
             key={index}
             label={drawerItem.label}

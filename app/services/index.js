@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {log} from "../utils/logUtils";
+import {log} from '../utils/logUtils';
 
-const DOMAIN = 'http://127.0.0.1:5000'
+const DOMAIN = 'http://127.0.0.1:5000';
 // const DOMAIN = 'http://103.226.251.81:5000/'
 
-let tokenValue = ''
+let tokenValue = '';
 
 const config = {
   headers: {
@@ -12,11 +12,10 @@ const config = {
   },
 };
 
-export const setToken = (token) => {
-  log('setToken value ' + token)
-  config.headers.token = token
-}
-
+export const setToken = token => {
+  log('setToken value ' + token);
+  config.headers.token = token;
+};
 
 /*************** API User *****************/
 export const getUser = async () => {

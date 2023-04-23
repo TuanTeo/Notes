@@ -19,6 +19,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import DrawerItemList from './DrawerItemList';
+import NAVIGATION_COMPONENT from '../utils/navConstants';
 
 const ProjectItem = ({label, onPress, type, name, activeItemColor, color}) => {
   return (
@@ -51,6 +52,7 @@ const CustomDrawer = props => {
   const [show, toggleProfile] = useReducer(s => !s, false);
 
   const fun = () => {
+    navigation.navigate(NAVIGATION_COMPONENT.ACCOUNT_MANAGER_SCREEN);
     show
       ? scrollRef.current.scrollTo({
           y: 0,

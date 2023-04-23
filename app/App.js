@@ -5,6 +5,7 @@ import LoginScreen from './screens/LoginScreen/index.js';
 import 'react-native-gesture-handler';
 import DrawerNav from './drawers/DrawerNav.js';
 import NAVIGATION_COMPONENT from './utils/navConstants.js';
+import LoginNavigator from './navigations/LoginNavigator.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,8 +18,8 @@ export default App = () => {
           headerShown: false,
         }}>
         <Stack.Screen
-          name={NAVIGATION_COMPONENT.LOGIN_SCREEN}
-          component={LoginScreen}
+          name={NAVIGATION_COMPONENT.LOGIN_NAV}
+          component={LoginNavigator}
         />
         <Stack.Screen
           name={NAVIGATION_COMPONENT.DRAWER_NAV}

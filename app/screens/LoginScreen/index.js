@@ -76,7 +76,7 @@ export default LoginScreen = observer(({navigation}) => {
       const res = await login(body);
       console.log('res', res);
       if (res?.data.token) {
-        setToken(res?.data.token)
+        setToken(res?.data.token);
         await AsyncStorage.setItem('userName', email);
         userStore.setUser(res?.data?.user_id || '');
         navigation.navigate(NAVIGATION_COMPONENT.DRAWER_NAV);
@@ -152,6 +152,7 @@ export default LoginScreen = observer(({navigation}) => {
       <TouchableOpacity
         onPress={() => {
           console.log('Tuanteo', login());
+          navigation.navigate(NAVIGATION_COMPONENT.FORGOT_PASS_SCREEN);
         }}
         style={styles.forgetPasswordButton}>
         <Text style={{color: 'blue'}}>Quên mật khẩu</Text>
@@ -159,7 +160,11 @@ export default LoginScreen = observer(({navigation}) => {
 
       <View style={styles.signupArea}>
         <Text>Bạn chưa có tài khoản? </Text>
-        <TouchableOpacity onPress={() => log('SignUp')}>
+        <TouchableOpacity
+          onPress={() => {
+            log('SignUp');
+            navigation.navigate(NAVIGATION_COMPONENT.SIGN_UP_SCREEN);
+          }}>
           <Text style={{color: 'blue'}}>Đăng ký</Text>
         </TouchableOpacity>
       </View>
