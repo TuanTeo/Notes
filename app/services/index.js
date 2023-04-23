@@ -1,24 +1,42 @@
 import axios from 'axios';
+import {log} from "../utils/logUtils";
+
+const DOMAIN = 'http://127.0.0.1:5000'
+// const DOMAIN = 'http://103.226.251.81:5000/'
+
+let tokenValue = ''
 
 const config = {
   headers: {
-    token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJ0dWFudHF0IiwidXNlcl9pZCI6NH0.hAF8EPFmB1NXTLZivZFN3y4Hv2RHcl5VXVhshzfQTFg',
+    token: tokenValue,
   },
 };
 
+export const setToken = (token) => {
+  log('setToken value ' + token)
+  config.headers.token = token
+}
+
+
+/*************** API User *****************/
 export const getUser = async () => {
   const res = await axios
-    .get('http://127.0.0.1:5000/users', config)
+    .get(DOMAIN + '/users', config)
     .then(response => console.log(response))
     .catch(err => console.log(err));
   return res;
 };
 
 export const login = async body => {
-  const res = await axios.post('http://127.0.0.1:5000/login', body);
-  // .then(response => console.log(JSON.stringify(response)))
-  // .catch(err => console.log(err));
+  const res = await axios.post(DOMAIN + '/login', body);
+  return res;
+};
 
+/*************** API Task *****************/
+export const getDetailTask = async () => {
+  const res = await axios
+    .get(DOMAIN + '/task/1', config)
+    .then(response => console.log(response))
+    .catch(err => console.log(err));
   return res;
 };

@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ReactNativeBiometrics, {BiometryTypes} from 'react-native-biometrics';
 import {Button, Text, TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Entypo';
-import {getUser, login} from '../../services';
+import {login, setToken} from '../../services';
 import {log} from '../../utils/logUtils';
 import NAVIGATION_COMPONENT from '../../utils/navConstants';
 import {
@@ -76,6 +76,7 @@ export default LoginScreen = observer(({navigation}) => {
       const res = await login(body);
       console.log('res', res);
       if (res?.data.token) {
+        setToken(res?.data.token)
         await AsyncStorage.setItem('userName', email);
         userStore.setUser(res?.data?.user_id || '');
         navigation.navigate(NAVIGATION_COMPONENT.DRAWER_NAV);
