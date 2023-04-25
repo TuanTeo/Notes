@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {FAB, Text} from 'react-native-paper';
 import {colors} from '../../drawers/constant';
@@ -14,6 +14,8 @@ export default HomeScreen = observer(({navigation}) => {
   const userStore = useUserStore();
   const taskStore = useTaskStore()
 
+  const [task, setTask] = useState()
+
   useEffect(() => {
     logUtils('user', userStore.user.user_id);
     getAllTaskByUser()
@@ -23,6 +25,7 @@ export default HomeScreen = observer(({navigation}) => {
     const res = await getTaskByUser(userStore.user.user_id)
     if (res.data) {
       taskStore.setTask(res.data)
+      setTask(taskStore)
     }
   }
 
@@ -35,7 +38,7 @@ export default HomeScreen = observer(({navigation}) => {
     <View style={styles.container}>
       <View style={styles.container}>
         <ListNote
-          listNote={fakeListNote}
+          listNote={task?.task.data}
           itemOnClick={() => noteItemOnClick()}
         />
       </View>
@@ -71,8 +74,9 @@ const NoteItem = props => {
       <View style={styles.container1}>
         <Text style={styles.noteTitle}>{props.item.title}</Text>
         <View>
-          {props.item.description.map(item => (
-            <Text>{item}</Text>
+          {props.item.detail.length !== 0 && props.item.detail.map((item, index) => (
+            (index <= 2) ?
+            <Text>{item.content}</Text> : null
           ))}
         </View>
       </View>
