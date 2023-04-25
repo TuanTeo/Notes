@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {Button, TextInput} from 'react-native-paper';
 import {AlertIOS, StyleSheet, Text, View} from 'react-native';
-import {login, setToken, signUp} from "../../services";
+import {signUp} from "../../services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import NAVIGATION_COMPONENT from "../../utils/navConstants";
 import {log} from "../../utils/logUtils";
+import {showToast} from "../../components/toast/Toast";
 
 const SignUpScreen = props => {
   const { navigation } = props;
@@ -49,16 +49,14 @@ const SignUpScreen = props => {
     setLoading(true);
     try {
       const res = await signUp(body);
-      log('signUp', signUp)
-      // if (res?.data.token) {
-      //   setToken(res?.data.token);
-      //   await AsyncStorage.setItem('userName', userName);
-      //   userStore.setUser(res?.data?.user_id || '');
-      //   navigation.pop();
-      //   AlertIOS.alert('Success');
-      // } else {validPassword()
-      //   AlertIOS.alert('Fail');
-      // }
+      if (res?.data) {
+        log('signUp', res)
+        await AsyncStorage.setItem('userName', userName);
+        navigation.pop();
+        showToast('Success');
+      } else {validPassword()
+        showToast('Fail');
+      }
     } catch (error) {}
     setLoading(false);
   }

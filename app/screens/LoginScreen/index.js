@@ -20,6 +20,7 @@ import {
 } from '../../utils/secretUtils';
 import {useUserStore} from '../../stores/userStore';
 import {observer} from 'mobx-react-lite';
+import {showToast} from "../../components/toast/Toast";
 
 export default LoginScreen = observer(({navigation}) => {
   const [email, setEmail] = useState('');
@@ -80,9 +81,9 @@ export default LoginScreen = observer(({navigation}) => {
         await AsyncStorage.setItem('userName', email);
         userStore.setUser(res?.data?.user_id || '');
         navigation.navigate(NAVIGATION_COMPONENT.DRAWER_NAV);
-        AlertIOS.alert('Success');
+        showToast('Success');
       } else {
-        AlertIOS.alert('Fail');
+        showToast('Fail');
       }
     } catch (error) {}
     setLoading(false);
