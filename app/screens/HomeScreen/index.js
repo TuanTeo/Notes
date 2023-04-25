@@ -24,8 +24,8 @@ export default HomeScreen = observer(({navigation}) => {
   const getAllTaskByUser = async () => {
     const res = await getTaskByUser(userStore.user.user_id)
     if (res.data) {
-      taskStore.setTask(res.data)
       setTask(taskStore)
+      taskStore.setTask(res.data)
     }
   }
 

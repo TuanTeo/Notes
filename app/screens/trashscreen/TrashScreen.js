@@ -1,12 +1,23 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {FAB, Text} from 'react-native-paper';
 import {colors} from '../../drawers/constant';
 import {dimens} from '../../resources/dimens';
 import {logUtils} from '../../utils/logUtils';
 import NAVIGATION_COMPONENT from '../../utils/navConstants';
+import {observer} from "mobx-react-lite";
+import {useTaskStore} from "../../stores/taskStore";
 
-export default TrashScreen = ({navigation}) => {
+export default TrashScreen = observer(({navigation}) => {
+
+  const taskStore = useTaskStore()
+
+  const [task, setTask] = useState()
+
+  useEffect(() => {
+    setTask(taskStore)
+  }, []);
+
   const noteItemOnClick = () => {
     logUtils('Pressed container1');
     navigation.navigate(NAVIGATION_COMPONENT.DETAIL_NOTE_SCREEN);
@@ -16,7 +27,7 @@ export default TrashScreen = ({navigation}) => {
     <View style={styles.container}>
       <View style={styles.container}>
         <ListNote
-          listNote={fakeListNote}
+          listNote={task?.deletedTask.data}
           itemOnClick={() => noteItemOnClick()}
         />
       </View>
@@ -32,7 +43,7 @@ export default TrashScreen = ({navigation}) => {
       /> */}
     </View>
   );
-};
+});
 
 const ListNote = props => {
   return (
@@ -52,8 +63,9 @@ const NoteItem = props => {
       <View style={styles.container1}>
         <Text style={styles.noteTitle}>{props.item.title}</Text>
         <View>
-          {props.item.description.map(item => (
-            <Text>{item}</Text>
+          {props.item.detail.length !== 0 && props.item.detail.map((item, index) => (
+            (index <= 2) ?
+              <Text>{item.content}</Text> : null
           ))}
         </View>
       </View>
