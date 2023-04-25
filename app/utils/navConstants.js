@@ -1,15 +1,15 @@
 const NAVIGATION_COMPONENT = {
   DRAWER_NAV: 'DRAWER_NAV',
-  LOGIN_SCREEN: 'Login',
-  HOME_SCREEN: 'Home',
-  ARCHIVED_SCREEN: 'Archived',
-  TRASH_SCREEN: 'Trash',
-  CREATE_NOTE_SCREEN: 'Create New Note',
-  DETAIL_NOTE_SCREEN: 'Detail Note',
-  SIGN_UP_SCREEN: 'Sign Up',
-  FORGOT_PASS_SCREEN: 'Forgot Password',
+  LOGIN_SCREEN: 'Đăng nhập',
+  HOME_SCREEN: 'Chính',
+  ARCHIVED_SCREEN: 'Lưu trữ',
+  TRASH_SCREEN: 'Thùng rác',
+  CREATE_NOTE_SCREEN: 'Tạo ghi chú',
+  DETAIL_NOTE_SCREEN: 'Chi tiết',
+  SIGN_UP_SCREEN: 'Đăng ký',
+  FORGOT_PASS_SCREEN: 'Quên mật khẩu',
   LOGIN_NAV: 'LOGIN_NAV',
-  ACCOUNT_MANAGER_SCREEN: 'Account Manager',
+  ACCOUNT_MANAGER_SCREEN: 'Quản lý tài khoản',
 };
 
 export default NAVIGATION_COMPONENT;
