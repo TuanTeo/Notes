@@ -27,8 +27,12 @@ export const getUser = async () => {
 };
 
 export const login = async body => {
-  const res = await axios.post(DOMAIN + '/login', body);
-  return res;
+  try {
+    const res = await axios.post(DOMAIN + '/login', body);
+    return res;
+  } catch (e) {
+    return null;
+  }
 };
 
 export const signUp = async body => {
