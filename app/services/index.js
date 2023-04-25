@@ -37,10 +37,7 @@ export const signUp = async body => {
 };
 
 /*************** API Task *****************/
-export const getDetailTask = async () => {
-  const res = await axios
-    .get(DOMAIN + '/task/1', config)
-    .then(response => console.log(response))
-    .catch(err => console.log(err));
+export const getTaskByUser = async (userId) => {
+  const res = await axios.get(DOMAIN + `/task/${userId}`, config)
   return res;
 };

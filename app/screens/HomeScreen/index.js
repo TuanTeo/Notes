@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FAB, Text} from 'react-native-paper';
 import {colors} from '../../drawers/constant';
 import {dimens} from '../../resources/dimens';
@@ -8,16 +7,29 @@ import {logUtils} from '../../utils/logUtils';
 import NAVIGATION_COMPONENT from '../../utils/navConstants';
 import {observer} from 'mobx-react-lite';
 import {useUserStore} from '../../stores/userStore';
+import {getTaskByUser} from "../../services";
+import {useTaskStore} from "../../stores/taskStore";
 
 export default HomeScreen = observer(({navigation}) => {
   const userStore = useUserStore();
+  const taskStore = useTaskStore()
+
+  useEffect(() => {
+    logUtils('user', userStore.user.user_id);
+    getAllTaskByUser()
+  }, []);
+
+  const getAllTaskByUser = async () => {
+    const res = await getTaskByUser(userStore.user.user_id)
+    if (res.data) {
+      taskStore.setTask(res.data)
+    }
+  }
+
   const noteItemOnClick = () => {
     logUtils('Pressed container1');
     navigation.navigate(NAVIGATION_COMPONENT.DETAIL_NOTE_SCREEN);
   };
-  useEffect(() => {
-    logUtils('user', userStore.user);
-  }, []);
 
   return (
     <View style={styles.container}>
