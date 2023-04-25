@@ -26,7 +26,7 @@ const DrawerNav = () => {
           component={_.component}
           options={{
             item: _,
-            headerShown: false,
+            headerShown: true,
           }}
         />
       ))}

@@ -17,6 +17,7 @@ const ArchivedNavigator = () => {
       <Stack.Screen
         name={NAVIGATION_COMPONENT.ARCHIVED_SCREEN}
         component={ArchivedScreen}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name={NAVIGATION_COMPONENT.DETAIL_NOTE_SCREEN}

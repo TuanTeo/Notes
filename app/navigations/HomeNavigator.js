@@ -17,6 +17,7 @@ const HomeNavigator = () => {
       <Stack.Screen
         name={NAVIGATION_COMPONENT.HOME_SCREEN}
         component={HomeScreen}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name={NAVIGATION_COMPONENT.CREATE_NOTE_SCREEN}

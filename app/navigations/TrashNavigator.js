@@ -17,6 +17,7 @@ const TrashNavigator = () => {
       <Stack.Screen
         name={NAVIGATION_COMPONENT.TRASH_SCREEN}
         component={TrashScreen}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name={NAVIGATION_COMPONENT.DETAIL_NOTE_SCREEN}
