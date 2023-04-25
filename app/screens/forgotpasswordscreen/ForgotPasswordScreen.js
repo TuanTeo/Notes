@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {Button, TextInput} from 'react-native-paper';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 const ForgotPasswordScreen = props => {
+  const { navigation } = props;
   const [email, setEmail] = useState('');
   return (
     <View style={styles.container}>
+      <Text>Nhập email khôi phục</Text>
       <TextInput
         style={styles.text_input}
         label="Email"
@@ -15,7 +17,9 @@ const ForgotPasswordScreen = props => {
       />
 
       <View style={styles.button_login_container}>
-        <Button mode="contained" onPress={() => {}}>
+        <Button mode="contained" onPress={() => {
+          navigation.pop()
+        }}>
           Xác nhận
         </Button>
       </View>

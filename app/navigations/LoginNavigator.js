@@ -12,7 +12,7 @@ const LoginNavigator = () => {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
       }}>
       <Stack.Screen
         name={NAVIGATION_COMPONENT.LOGIN_SCREEN}

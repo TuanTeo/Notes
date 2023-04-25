@@ -3,6 +3,8 @@ import {Button, TextInput} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 
 const SignUpScreen = props => {
+  const { navigation } = props;
+
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
@@ -42,7 +44,9 @@ const SignUpScreen = props => {
       />
 
       <View style={styles.button_login_container}>
-        <Button mode="contained" onPress={() => {}}>
+        <Button mode="contained" onPress={() => {
+          navigation.pop()
+        }}>
           Đăng ký
         </Button>
       </View>
