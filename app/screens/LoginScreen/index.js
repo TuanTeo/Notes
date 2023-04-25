@@ -23,12 +23,29 @@ import {observer} from 'mobx-react-lite';
 import {showToast} from "../../components/toast/Toast";
 
 export default LoginScreen = observer(({navigation}) => {
-  const [email, setEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [pass, setPass] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isValid, setIsValid] = useState(true)
+  const [inValidMessage, setinValidMessage] = useState('')
 
   const userStore = useUserStore();
   const rnBiometrics = new ReactNativeBiometrics();
+
+  const validInfo = () => {
+    if (userName) {
+      if (pass) {
+            setIsValid(true)
+            return true
+        } else {
+        setinValidMessage('Chưa nhập mật khẩu!')
+      }
+    } else {
+      setinValidMessage('Chưa nhập User name!')
+    }
+    setIsValid(false)
+    return false
+  }
 
   useEffect(() => {
     getUserStore();
@@ -69,7 +86,7 @@ export default LoginScreen = observer(({navigation}) => {
 
   const handleLogin = async () => {
     const body = {
-      user_name: email,
+      user_name: userName,
       user_password: pass,
     };
     setLoading(true);
@@ -78,12 +95,14 @@ export default LoginScreen = observer(({navigation}) => {
       console.log('res', res);
       if (res?.data.token) {
         setToken(res?.data.token);
-        await AsyncStorage.setItem('userName', email);
+        await AsyncStorage.setItem('userName', userName);
         userStore.setUser(res?.data?.user_id || '');
         navigation.navigate(NAVIGATION_COMPONENT.DRAWER_NAV);
-        showToast('Success');
+        // showToast('Success');
       } else {
-        showToast('Fail');
+        setIsValid(false)
+        setinValidMessage('Sai thông tin đăng nhập!')
+        // showToast('Fail');
       }
     } catch (error) {}
     setLoading(false);
@@ -94,10 +113,10 @@ export default LoginScreen = observer(({navigation}) => {
     <View style={styles.container}>
       <TextInput
         style={styles.text_input}
-        label="Email"
+        label="Username"
         mode="outlined"
-        value={email}
-        onChangeText={setEmail}
+        value={userName}
+        onChangeText={setUserName}
       />
       <TextInput
         style={styles.text_input}
@@ -108,6 +127,10 @@ export default LoginScreen = observer(({navigation}) => {
         onChangeText={setPass}
       />
 
+      {isValid ? null : (
+        <Text style={styles.invalidText}>{inValidMessage}</Text>
+      )}
+
       <View style={styles.button_login_container}>
         {loading ? (
           <ActivityIndicator />
@@ -115,9 +138,9 @@ export default LoginScreen = observer(({navigation}) => {
           <Button
             mode="contained"
             onPress={() => {
-              // log('Đăng nhập');
-              // navigation.navigate(NAVIGATION_COMPONENT.DRAWER_NAV);
-              handleLogin();
+              if (validInfo()) {
+                handleLogin();
+              }
             }}>
             Đăng nhập
           </Button>
@@ -203,4 +226,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: '10%',
   },
+  invalidText: {
+    color: 'red'
+  }
 });
