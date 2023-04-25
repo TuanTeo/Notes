@@ -31,6 +31,11 @@ export const login = async body => {
   return res;
 };
 
+export const signUp = async body => {
+  const res = await axios.post(DOMAIN + '/user/add', body);
+  return res;
+};
+
 /*************** API Task *****************/
 export const getDetailTask = async () => {
   const res = await axios

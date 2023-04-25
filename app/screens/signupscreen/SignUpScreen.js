@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import {Button, TextInput} from 'react-native-paper';
-import {StyleSheet, View} from 'react-native';
+import {AlertIOS, StyleSheet, Text, View} from 'react-native';
+import {login, setToken, signUp} from "../../services";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import NAVIGATION_COMPONENT from "../../utils/navConstants";
+import {log} from "../../utils/logUtils";
 
 const SignUpScreen = props => {
   const { navigation } = props;
@@ -9,6 +13,55 @@ const SignUpScreen = props => {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
   const [rePass, setRePass] = useState('');
+  const [loading, setLoading] = useState(false)
+  const [isValid, setIsValid] = useState(true)
+  const [inValidMessage, setinValidMessage] = useState('')
+
+  const validPassword = () => {
+    if (userName) {
+      if (email) {
+        if (pass && rePass) {
+          if (pass === rePass) {
+            setIsValid(true)
+            return true
+          } else {
+            setinValidMessage('Mật khẩu không khớp!')
+          }
+        } else {
+          setinValidMessage('Chưa nhập mật khẩu!')
+        }
+      } else {
+        setinValidMessage('Chưa nhập Email!')
+      }
+    } else {
+      setinValidMessage('Chưa nhập User name!')
+    }
+    setIsValid(false)
+    return false
+  }
+
+  const handleSignUp = async () => {
+    const body = {
+      user_name: userName,
+      user_email: email,
+      user_password: pass,
+    };
+    setLoading(true);
+    try {
+      const res = await signUp(body);
+      log('signUp', signUp)
+      // if (res?.data.token) {
+      //   setToken(res?.data.token);
+      //   await AsyncStorage.setItem('userName', userName);
+      //   userStore.setUser(res?.data?.user_id || '');
+      //   navigation.pop();
+      //   AlertIOS.alert('Success');
+      // } else {validPassword()
+      //   AlertIOS.alert('Fail');
+      // }
+    } catch (error) {}
+    setLoading(false);
+  }
 
   return (
     <View style={styles.container}>
@@ -43,9 +96,15 @@ const SignUpScreen = props => {
         onChangeText={setRePass}
       />
 
+      {isValid ? null : (
+        <Text style={styles.invalidText}>{inValidMessage}</Text>
+      )}
+
       <View style={styles.button_login_container}>
         <Button mode="contained" onPress={() => {
-          navigation.pop()
+          if (validPassword()) {
+            handleSignUp()
+          }
         }}>
           Đăng ký
         </Button>
@@ -66,7 +125,7 @@ const styles = StyleSheet.create({
   },
   button_login_container: {
     flexDirection: 'row',
-    marginTop: 5,
+    marginTop: 8,
   },
   loginButton: {
     width: '100%',
@@ -76,6 +135,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: '33%',
   },
+  invalidText: {
+    color: 'red'
+  }
 });
 
 export default SignUpScreen;
