@@ -8,7 +8,7 @@ import {colors} from './constant';
 export const ScreensArray = [
   {
     route: 'Home',
-    label: 'Home',
+    label: 'Ghi chú',
     type: Icons.Feather,
     icon: 'home',
     component: HomeNavigator,
@@ -16,7 +16,7 @@ export const ScreensArray = [
   },
   {
     route: 'Archived',
-    label: 'Archived',
+    label: 'Lưu trữ',
     type: Icons.Feather,
     icon: 'archive',
     component: ArchivedNavigator,
@@ -24,7 +24,7 @@ export const ScreensArray = [
   },
   {
     route: 'Trash',
-    label: 'Trash',
+    label: 'Thùng rác',
     type: Icons.Feather,
     icon: 'trash',
     component: TrashNavigator,
@@ -34,7 +34,7 @@ export const ScreensArray = [
   // { route: 'Activity', label: 'My Activity', type: Icons.Feather, icon: 'pie-chart', component: HomeScreen, color: colors.primary, },
   {
     route: 'Settings',
-    label: 'Settings',
+    label: 'Cài đặt',
     type: Icons.Feather,
     icon: 'settings',
     component: SettingScreen,

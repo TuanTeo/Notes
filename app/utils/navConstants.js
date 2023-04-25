@@ -1,7 +1,7 @@
 const NAVIGATION_COMPONENT = {
   DRAWER_NAV: 'DRAWER_NAV',
   LOGIN_SCREEN: 'Đăng nhập',
-  HOME_SCREEN: 'Chính',
+  HOME_SCREEN: 'Ghi chú',
   ARCHIVED_SCREEN: 'Lưu trữ',
   TRASH_SCREEN: 'Thùng rác',
   CREATE_NOTE_SCREEN: 'Tạo ghi chú',
