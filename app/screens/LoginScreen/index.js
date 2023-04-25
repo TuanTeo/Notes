@@ -55,8 +55,7 @@ export default LoginScreen = observer(({navigation}) => {
     try {
       const value = await AsyncStorage.getItem('userName');
       if (value) {
-        setEmail(value);
-        console.log('value', value);
+        setUserName(value);
       }
     } catch (error) {}
   };
