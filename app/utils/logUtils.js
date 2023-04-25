@@ -1,7 +1,7 @@
-function log(mess) {
+function logUtils(mess) {
   if (__DEV__) {
     console.log(mess);
   }
 }
 
-export {log};
+export {logUtils};

@@ -12,7 +12,7 @@ import ReactNativeBiometrics, {BiometryTypes} from 'react-native-biometrics';
 import {Button, Text, TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Entypo';
 import {login, setToken} from '../../services';
-import {log} from '../../utils/logUtils';
+import {logUtils} from '../../utils/logUtils';
 import NAVIGATION_COMPONENT from '../../utils/navConstants';
 import {
   createMessageSignature,
@@ -58,9 +58,9 @@ export default LoginScreen = observer(({navigation}) => {
           console.log('signature: ' + signature);
           createMessageSignature(signature).then(encode => {
             /* Da co chu ky su dung private key */
-            log('encode: ' + encode);
+            logUtils('encode: ' + encode);
             verifyMessageSignature(signature, encode).then(result => {
-              log('verify:' + result);
+              logUtils('verify:' + result);
             });
           });
         }
@@ -125,7 +125,7 @@ export default LoginScreen = observer(({navigation}) => {
         <TouchableOpacity
           style={styles.fingerButton}
           onPress={() => {
-            log('Fingerprint');
+            logUtils('Fingerprint');
 
             rnBiometrics.isSensorAvailable().then(resultObject => {
               const {available, biometryType} = resultObject;
@@ -163,7 +163,7 @@ export default LoginScreen = observer(({navigation}) => {
         <Text>Bạn chưa có tài khoản? </Text>
         <TouchableOpacity
           onPress={() => {
-            log('SignUp');
+            logUtils('SignUp');
             navigation.navigate(NAVIGATION_COMPONENT.SIGN_UP_SCREEN);
           }}>
           <Text style={{color: 'blue'}}>Đăng ký</Text>

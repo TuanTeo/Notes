@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {FAB, Text} from 'react-native-paper';
 import {colors} from '../../drawers/constant';
 import {dimens} from '../../resources/dimens';
-import {log} from '../../utils/logUtils';
+import {logUtils} from '../../utils/logUtils';
 import NAVIGATION_COMPONENT from '../../utils/navConstants';
 import {observer} from 'mobx-react-lite';
 import {useUserStore} from '../../stores/userStore';
@@ -12,13 +12,13 @@ import {useUserStore} from '../../stores/userStore';
 export default HomeScreen = observer(({navigation}) => {
   const userStore = useUserStore();
   const noteItemOnClick = () => {
-    log('Pressed container1');
+    logUtils('Pressed container1');
     navigation.navigate(NAVIGATION_COMPONENT.DETAIL_NOTE_SCREEN);
   };
   useEffect(() => {
-    console.log('user', userStore.user);
+    logUtils('user', userStore.user);
   }, []);
-  console.log('ttttttt');
+
   return (
     <View style={styles.container}>
       <View style={styles.container}>
@@ -33,7 +33,7 @@ export default HomeScreen = observer(({navigation}) => {
         icon="plus"
         color="white"
         onPress={() => {
-          log('Pressed FAB');
+          logUtils('Pressed FAB');
           navigation.navigate(NAVIGATION_COMPONENT.CREATE_NOTE_SCREEN);
         }}
       />

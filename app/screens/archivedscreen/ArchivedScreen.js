@@ -3,12 +3,12 @@ import {FlatList, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {FAB, Text} from 'react-native-paper';
 import {colors} from '../../drawers/constant';
 import {dimens} from '../../resources/dimens';
-import {log} from '../../utils/logUtils';
+import {logUtils} from '../../utils/logUtils';
 import NAVIGATION_COMPONENT from '../../utils/navConstants';
 
 export default ArchivedScreen = ({navigation}) => {
   const noteItemOnClick = () => {
-    log('Pressed container1');
+    logUtils('Pressed container1');
     navigation.navigate(NAVIGATION_COMPONENT.DETAIL_NOTE_SCREEN);
   };
 

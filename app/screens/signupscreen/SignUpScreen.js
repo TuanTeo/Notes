@@ -3,7 +3,7 @@ import {Button, TextInput} from 'react-native-paper';
 import {AlertIOS, StyleSheet, Text, View} from 'react-native';
 import {signUp} from "../../services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {log} from "../../utils/logUtils";
+import {logUtils} from "../../utils/logUtils";
 import {showToast} from "../../components/toast/Toast";
 
 const SignUpScreen = props => {
@@ -50,7 +50,7 @@ const SignUpScreen = props => {
     try {
       const res = await signUp(body);
       if (res?.data) {
-        log('signUp', res)
+        logUtils('signUp', res)
         await AsyncStorage.setItem('userName', userName);
         navigation.pop();
         showToast('Success');
