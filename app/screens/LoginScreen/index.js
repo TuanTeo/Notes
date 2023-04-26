@@ -108,6 +108,28 @@ export default LoginScreen = observer(({navigation}) => {
     // const test = JSON.parse('res', JSON.parse(res));
   };
 
+  function getBiometric() {
+    rnBiometrics.isSensorAvailable().then(resultObject => {
+      const {available, biometryType} = resultObject;
+
+      if (available && biometryType === BiometryTypes.TouchID) {
+        console.log('TouchID is supported');
+        getBiometricSignature();
+      } else if (available && biometryType === BiometryTypes.FaceID) {
+        console.log('FaceID is supported');
+        getBiometricSignature();
+      } else if (
+        available &&
+        biometryType === BiometryTypes.Biometrics
+      ) {
+        console.log('Biometrics is supported');
+        getBiometricSignature();
+      } else {
+        console.log('Biometrics not supported');
+      }
+    });
+  }
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -148,26 +170,7 @@ export default LoginScreen = observer(({navigation}) => {
           style={styles.fingerButton}
           onPress={() => {
             logUtils('Fingerprint');
-
-            rnBiometrics.isSensorAvailable().then(resultObject => {
-              const {available, biometryType} = resultObject;
-
-              if (available && biometryType === BiometryTypes.TouchID) {
-                console.log('TouchID is supported');
-                getBiometricSignature();
-              } else if (available && biometryType === BiometryTypes.FaceID) {
-                console.log('FaceID is supported');
-                getBiometricSignature();
-              } else if (
-                available &&
-                biometryType === BiometryTypes.Biometrics
-              ) {
-                console.log('Biometrics is supported');
-                getBiometricSignature();
-              } else {
-                console.log('Biometrics not supported');
-              }
-            });
+            getBiometric()
           }}>
           <Icon name="fingerprint" size={30} color="#6200ff" />
         </TouchableOpacity>

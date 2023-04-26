@@ -9,16 +9,19 @@ import {observer} from 'mobx-react-lite';
 import {useUserStore} from '../../stores/userStore';
 import {getTaskByUser} from "../../services";
 import {useTaskStore} from "../../stores/taskStore";
+import EnableBiometricDialog from "../../components/EnableBiometricDialog/EnableBiometricDialog";
 
 export default HomeScreen = observer(({navigation}) => {
   const userStore = useUserStore();
   const taskStore = useTaskStore()
 
   const [task, setTask] = useState()
+  const [modalVisible, setModalVisible] = useState(false)
 
   useEffect(() => {
     logUtils('user', userStore.user.user_id);
     getAllTaskByUser()
+    setModalVisible(true)
   }, []);
 
   const getAllTaskByUser = async () => {
@@ -52,6 +55,7 @@ export default HomeScreen = observer(({navigation}) => {
           navigation.navigate(NAVIGATION_COMPONENT.CREATE_NOTE_SCREEN);
         }}
       />
+      {modalVisible ? <EnableBiometricDialog modalVisible={modalVisible} setModalVisible={setModalVisible}/> : null}
     </View>
   );
 });
