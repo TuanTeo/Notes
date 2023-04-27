@@ -156,8 +156,8 @@ const CustomDrawer = props => {
             source={require('../assets/images/avatar.png')}
           />
           <View style={styles.textContainer}>
-            <Text style={styles.headerTitle}>TuanTeo</Text>
-            <Text style={styles.text}>Software Engineer</Text>
+            <Text style={styles.headerTitle}>tuantqt</Text>
+            <Text style={styles.text}>tuantqt0108@gmail.com</Text>
           </View>
         </Animated.View>
       </TouchableOpacity>
