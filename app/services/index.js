@@ -18,12 +18,8 @@ export const setToken = token => {
 };
 
 /*************** API User *****************/
-export const getUser = async () => {
-  const res = await axios
-    .get(DOMAIN + '/users', config)
-    .then(response => console.log(response))
-    .catch(err => console.log(err));
-  return res;
+export const getUserById = async (userId) => {
+  return await axios.get(DOMAIN + `/user/${userId}`, config)
 };
 
 export const login = async body => {
