@@ -41,3 +41,11 @@ export const getTaskByUser = async (userId) => {
   const res = await axios.get(DOMAIN + `/task/${userId}`, config)
   return res;
 };
+
+export const createNewTaskApi = async (body) => {
+  return await axios.post(DOMAIN + `/task/add`, body, config)
+};
+
+export const updateNewTaskApi = async (body) => {
+  return await axios.post(DOMAIN + `/task/update`, body, config)
+};

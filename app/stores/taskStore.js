@@ -6,6 +6,7 @@ class TaskStore {
   task = {};
   archivedTask = {}
   deletedTask = {}
+  createTask = {}
 
   constructor() {
     makeAutoObservable(this);
@@ -31,6 +32,14 @@ class TaskStore {
     this.archivedTask = {...this.archivedTask, data: archived};
     this.deletedTask = {...this.deletedTask, data: deleted};
   };
+
+  setCreateTaskId = createTaskId => {
+    this.createTask = {...this.createTask, task_id: createTaskId};
+  }
+
+  setTitle = text => {
+    this.createTask = {...this.createTask, title: text};
+  }
 }
 
 // Instantiate the counter store.
