@@ -5,11 +5,13 @@ import {StyleSheet, TextInput, View} from "react-native";
 import {observer} from "mobx-react-lite";
 import {useUserStore} from "../../stores/userStore";
 import {useTaskStore} from "../../stores/taskStore";
+import {useDetailStore} from "../../stores/detailStore";
 import {createNewTaskApi, getTaskByUser, updateNewTaskApi} from "../../services";
 
 const CreateNoteScreen = observer((props) => {
   const userStore = useUserStore();
   const taskStore = useTaskStore();
+  const detailStore = useDetailStore()
 
   const [title, setTitle] = useState('')
 
@@ -39,6 +41,7 @@ const CreateNoteScreen = observer((props) => {
     const res = await createNewTaskApi(body)
     if (res.data.task_id) {
       taskStore.setCreateTaskId(res.data.task_id)
+      detailStore.setTaskId(res.data.task_id)
     }
   }
 

@@ -11,8 +11,12 @@ import {Text} from 'react-native-paper';
 import {colors} from '../../drawers/constant';
 import TaskItem from '../../components/task/TaskItem';
 import {ScrollView} from 'react-native-gesture-handler';
+import {observer} from "mobx-react-lite";
+import {useDetailStore} from "../../stores/detailStore";
 
-const NoteView = () => {
+const NoteView = observer((props) => {
+  const detailStore = useDetailStore()
+
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -54,7 +58,7 @@ const NoteView = () => {
       </KeyboardAvoidingView>
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   title_input: {
