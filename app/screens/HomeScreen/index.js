@@ -68,6 +68,7 @@ const ListNote = props => {
         <NoteItem item={item} itemOnClick={props.itemOnClick} />
       )}
       contentContainerStyle={{paddingBottom: 8}}
+      showsVerticalScrollIndicator={false}
     />
   );
 };

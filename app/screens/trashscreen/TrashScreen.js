@@ -29,6 +29,7 @@ export default TrashScreen = observer(({navigation}) => {
         <ListNote
           listNote={task?.deletedTask.data}
           itemOnClick={() => noteItemOnClick()}
+          showsVerticalScrollIndicator={false}
         />
       </View>
       {/* <FAB
