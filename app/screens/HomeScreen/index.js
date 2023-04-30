@@ -9,11 +9,13 @@ import {observer} from 'mobx-react-lite';
 import {useUserStore} from '../../stores/userStore';
 import {getTaskByUser} from "../../services";
 import {useTaskStore} from "../../stores/taskStore";
+import {useDetailStore} from "../../stores/detailStore";
 import EnableBiometricDialog from "../../components/EnableBiometricDialog/EnableBiometricDialog";
 
 export default HomeScreen = observer(({navigation}) => {
   const userStore = useUserStore();
   const taskStore = useTaskStore()
+  const detailStore = useDetailStore()
 
   const [task, setTask] = useState()
   const [modalVisible, setModalVisible] = useState(false)
@@ -32,8 +34,8 @@ export default HomeScreen = observer(({navigation}) => {
     }
   }
 
-  const noteItemOnClick = () => {
-    logUtils('Pressed container1');
+  const noteItemOnClick = (taskId) => {
+    detailStore.setTaskId(taskId)
     navigation.navigate(NAVIGATION_COMPONENT.DETAIL_NOTE_SCREEN);
   };
 
@@ -42,7 +44,7 @@ export default HomeScreen = observer(({navigation}) => {
       <View style={styles.container}>
         <ListNote
           listNote={task?.task.data}
-          itemOnClick={() => noteItemOnClick()}
+          itemOnClick={noteItemOnClick}
         />
       </View>
       <FAB
@@ -75,7 +77,9 @@ const ListNote = props => {
 
 const NoteItem = props => {
   return (
-    <TouchableOpacity onPress={props.itemOnClick}>
+    <TouchableOpacity onPress={() => {
+      props.itemOnClick(props.item.task_id)
+    }}>
       <View style={styles.container1}>
         <Text style={styles.noteTitle}>{props.item.title}</Text>
         <View>
