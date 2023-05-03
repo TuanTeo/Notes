@@ -12,12 +12,13 @@ import {colors} from '../../drawers/constant';
 import TaskItem from '../../components/task/TaskItem';
 import {observer} from "mobx-react-lite";
 import {useDetailStore} from "../../stores/detailStore";
-import {getDetailByTaskId} from "../../services";
+import {addDetailApi, getDetailByTaskId} from "../../services";
 
 const NoteView = observer((props) => {
   const detailStore = useDetailStore()
 
   const [detail, setDetail] = useState({})
+  const [addContent, setAddContent] = useState('')
 
   useEffect(() => {
     getDetailTask()
@@ -31,9 +32,28 @@ const NoteView = observer((props) => {
     }
   }
 
+  const addDetailToTask = async (addContent) => {
+    const body = {
+      content: addContent,
+      files: '',
+      task_id: detailStore.task.task_id
+    }
+    const res = await addDetailApi(body)
+    if (res.data.detail_id) {
+      setAddContent('')
+      getDetailTask()
+    }
+  }
+
+  const addDetail = () => {
+    if (addContent) {
+      addDetailToTask(addContent)
+    }
+  }
+
   return (
     <View style={styles.container}>
-      {detail?.details?.data.length > 0 ?
+      {detail?.details?.data?.length > 0 ?
         <FlatList
           data={detail?.details?.data}
           renderItem={({item}) => (
@@ -52,8 +72,10 @@ const NoteView = observer((props) => {
           style={styles.input}
           placeholder={'Write a task'}
           multiline={true}
+          value={addContent}
+          onChangeText={(text => setAddContent(text))}
         />
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => addDetail()}>
           <View style={styles.addWrapper}>
             <Text style={styles.addText}>+</Text>
           </View>
