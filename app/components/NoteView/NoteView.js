@@ -21,7 +21,7 @@ const NoteView = observer((props) => {
 
   useEffect(() => {
     getDetailTask()
-  }, [])
+  }, [detailStore.task])
 
   const getDetailTask = async () => {
     const res = await getDetailByTaskId(detailStore.task.task_id)
