@@ -49,3 +49,8 @@ export const createNewTaskApi = async (body) => {
 export const updateNewTaskApi = async (body) => {
   return await axios.post(DOMAIN + `/task/update`, body, config)
 };
+
+
+export const getDetailByTaskId = async (taskId) => {
+  return await axios.get(DOMAIN + `/detail/${taskId}`, config)
+};

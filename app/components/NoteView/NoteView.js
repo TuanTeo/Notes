@@ -1,46 +1,49 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
   StyleSheet,
   View,
   TextInput,
-  TouchableOpacity,
+  TouchableOpacity, FlatList,
 } from 'react-native';
 import {Text} from 'react-native-paper';
 import {colors} from '../../drawers/constant';
 import TaskItem from '../../components/task/TaskItem';
-import {ScrollView} from 'react-native-gesture-handler';
 import {observer} from "mobx-react-lite";
 import {useDetailStore} from "../../stores/detailStore";
+import {getDetailByTaskId} from "../../services";
 
 const NoteView = observer((props) => {
   const detailStore = useDetailStore()
 
+  const [detail, setDetail] = useState({})
+
+  useEffect(() => {
+    getDetailTask()
+  }, [])
+
+  const getDetailTask = async () => {
+    const res = await getDetailByTaskId(detailStore.task.task_id)
+    if (res.data) {
+      setDetail(detailStore)
+      detailStore.setDetails(res.data)
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <TaskItem
-          text={
-            'Task 1 Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1Task 1'
-          }
-        />
-        <TaskItem text={'Task 2'} />
-        <TaskItem text={'Task 3'} />
-        <TaskItem text={'Task 4'} />
-        <TaskItem text={'Task 5'} />
-        <TaskItem text={'Task 6'} />
-        <TaskItem text={'Task 6'} />
-        <TaskItem text={'Task 6'} />
-        <TaskItem text={'Task 6'} />
-        <TaskItem text={'Task 6'} />
-
-        <TaskItem text={'Task 6'} />
-        <TaskItem text={'Task 6'} />
-        <TaskItem text={'Task 6'} />
-        <TaskItem text={'Task 6'} />
-        <TaskItem text={'Task 6'} />
-      </ScrollView>
+      {detail?.details?.data.length > 0 ?
+        <FlatList
+          data={detail?.details?.data}
+          renderItem={({item}) => (
+            <TaskItem text={item.content} />
+          )}
+        /> :
+        <View style={styles.emptyContainer}>
+          <Text style={styles.emptyText}>Trống</Text>
+        </View>
+      }
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -110,6 +113,14 @@ const styles = StyleSheet.create({
   addText: {
     fontSize: 28,
   },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  emptyText: {
+    fontStyle: 'italic'
+  }
 });
 
 export default NoteView;
