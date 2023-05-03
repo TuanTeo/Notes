@@ -50,7 +50,7 @@ export const updateNewTaskApi = async (body) => {
   return await axios.post(DOMAIN + `/task/update`, body, config)
 };
 
-
+/*************** API Detail *****************/
 export const getDetailByTaskId = async (taskId) => {
   return await axios.get(DOMAIN + `/detail/${taskId}`, config)
 };
@@ -58,3 +58,5 @@ export const getDetailByTaskId = async (taskId) => {
 export const addDetailApi = async (body) => {
   return await axios.post(DOMAIN + `/detail/add`, body, config)
 };
+
+/*************** API Biometric *****************/

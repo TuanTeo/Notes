@@ -11,6 +11,8 @@ import {getTaskByUser} from "../../services";
 import {useTaskStore} from "../../stores/taskStore";
 import {useDetailStore} from "../../stores/detailStore";
 import EnableBiometricDialog from "../../components/EnableBiometricDialog/EnableBiometricDialog";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {ASYNC_STORE_KEY} from "../../constants/asyncStoreKey";
 
 export default HomeScreen = observer(({navigation}) => {
   const userStore = useUserStore();
@@ -25,6 +27,23 @@ export default HomeScreen = observer(({navigation}) => {
     getAllTaskByUser()
     setModalVisible(true)
   }, []);
+
+  useEffect(() => {
+    getPublicStore();
+  }, []);
+
+  const getPublicStore = async () => {
+    try {
+      const value = await AsyncStorage.getItem(ASYNC_STORE_KEY.PUBLIC_KEY);
+      if (value) {
+        setModalVisible(false);
+      } else {
+        setModalVisible(true);
+      }
+    } catch (error) {
+      setModalVisible(true);
+    }
+  };
 
   const getAllTaskByUser = async () => {
     const res = await getTaskByUser(userStore.user.user_id)
@@ -125,12 +144,3 @@ const styles = StyleSheet.create({
     backgroundColor: colors.fab,
   },
 });
-
-const fakeListNote = [
-  {id: 1, title: 'Egov beta hop review', description: ['abc', 'hihi', 'kaka']},
-  {id: 2, title: 'Note1', description: ['abc', 'hihi', 'kaka']},
-  {id: 3, title: 'Note1', description: ['abc', 'hihi', 'kaka']},
-  {id: 4, title: 'Note1', description: ['abc', 'hihi', 'kaka']},
-  {id: 5, title: 'Note1', description: ['abc', 'hihi', 'kaka']},
-  {id: 6, title: 'Note1', description: ['abc', 'hihi', 'kaka']},
-];

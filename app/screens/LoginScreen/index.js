@@ -21,6 +21,7 @@ import {
 import {useUserStore} from '../../stores/userStore';
 import {observer} from 'mobx-react-lite';
 import {showToast} from "../../components/toast/Toast";
+import {ASYNC_STORE_KEY} from "../../constants/asyncStoreKey";
 
 export default LoginScreen = observer(({navigation}) => {
   const [userName, setUserName] = useState('');
@@ -53,7 +54,7 @@ export default LoginScreen = observer(({navigation}) => {
 
   const getUserStore = async () => {
     try {
-      const value = await AsyncStorage.getItem('userName');
+      const value = await AsyncStorage.getItem(ASYNC_STORE_KEY.USER_NAME);
       if (value) {
         setUserName(value);
       }
@@ -94,7 +95,7 @@ export default LoginScreen = observer(({navigation}) => {
       console.log('res', res);
       if (res?.data.token) {
         setToken(res?.data.token);
-        await AsyncStorage.setItem('userName', userName);
+        await AsyncStorage.setItem(ASYNC_STORE_KEY.USER_NAME, userName);
         userStore.setUser(res?.data?.user_id || '');
         navigation.navigate(NAVIGATION_COMPONENT.DRAWER_NAV);
         // showToast('Success');
