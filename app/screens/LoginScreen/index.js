@@ -193,6 +193,7 @@ export default LoginScreen = observer(({navigation}) => {
       if (res?.data.token) {
         setToken(res?.data.token);
         await AsyncStorage.setItem(ASYNC_STORE_KEY.USER_NAME, userName);
+        userStore.setUser(res?.data?.user_id || '');
         navigation.navigate(NAVIGATION_COMPONENT.DRAWER_NAV);
       } else {
         setIsValid(false)

@@ -29,13 +29,15 @@ export default HomeScreen = observer(({navigation}) => {
   }, []);
 
   useEffect(() => {
-    getPublicStore();
+    requestBiometricIfNeed();
   }, []);
 
-  const getPublicStore = async () => {
+  const requestBiometricIfNeed = async () => {
     try {
       const value = await AsyncStorage.getItem(ASYNC_STORE_KEY.PUBLIC_KEY);
-      if (value) {
+      const currentUser = await AsyncStorage.getItem(ASYNC_STORE_KEY.USER_NAME);
+      const bioUser = await AsyncStorage.getItem(ASYNC_STORE_KEY.BIO_USER_NAME);
+      if (value && currentUser === bioUser) {
         setModalVisible(false);
       } else {
         setModalVisible(true);
