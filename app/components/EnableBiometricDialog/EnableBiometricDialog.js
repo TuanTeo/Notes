@@ -3,6 +3,7 @@ import {Modal, Pressable, StyleSheet, Text, View} from "react-native";
 import ReactNativeBiometrics, {BiometryTypes} from "react-native-biometrics";
 import {createMessageSignature, verifyMessageSignature} from "../../utils/secretUtils";
 import {logUtils} from "../../utils/logUtils";
+import {powermod, stringToByteArray} from "../../utils/byteUtils";
 
 const EnableBiometricDialog = (props) => {
   const rnBiometrics = new ReactNativeBiometrics();
@@ -36,13 +37,16 @@ const EnableBiometricDialog = (props) => {
     rnBiometrics
       .createSignature({
         promptMessage: 'Đăng nhập',
-        payload: '5',
+        payload: 'secret',
       })
       .then(resultObject => {
         const {success, signature} = resultObject;
 
+        logUtils('x: ' + stringToByteArray(signature));
+        logUtils('bigint: ' + powermod(2000000573n, 2423423424n, 2000000579n));
+
         if (success) {
-          console.log('signature: ' + signature);
+          logUtils('signature: ' + signature);
           createMessageSignature(signature).then(encode => {
             /* Da co chu ky su dung private key */
             logUtils('encode: ' + encode);

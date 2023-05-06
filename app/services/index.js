@@ -60,3 +60,14 @@ export const addDetailApi = async (body) => {
 };
 
 /*************** API Biometric *****************/
+export const requestBiometricLogin = async (body) => {
+  return await axios.post(DOMAIN + `/requestLogin`, body, config)
+};
+
+export const verifyBiometricLogin = async (body) => {
+  return await axios.post(DOMAIN + `/verifyLogin`, body, config)
+};
+
+export const addPublicKeyApi = async (body) => {
+  return await axios.post(DOMAIN + `/addPublicKey`, body, config)
+};

@@ -11,7 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import ReactNativeBiometrics, {BiometryTypes} from 'react-native-biometrics';
 import {Button, Text, TextInput} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Entypo';
-import {login, setToken} from '../../services';
+import {login, requestBiometricLogin, setToken, verifyBiometricLogin} from '../../services';
 import {logUtils} from '../../utils/logUtils';
 import NAVIGATION_COMPONENT from '../../utils/navConstants';
 import {
@@ -22,6 +22,8 @@ import {useUserStore} from '../../stores/userStore';
 import {observer} from 'mobx-react-lite';
 import {showToast} from "../../components/toast/Toast";
 import {ASYNC_STORE_KEY} from "../../constants/asyncStoreKey";
+import {powermod} from "../../utils/byteUtils";
+import bigInt from "big-integer";
 
 export default LoginScreen = observer(({navigation}) => {
   const [userName, setUserName] = useState('');
@@ -131,6 +133,77 @@ export default LoginScreen = observer(({navigation}) => {
     });
   }
 
+  const testBiometricLogin = async () => {
+    // Todo x là private, p tạo khi bật settings (cố định), g tự tạo random từ p
+    const x = 1101938n
+    const g = 1000n
+    const p = 254751455037992070664185365042702116014n
+    const h = powermod(g, x, p)
+    logUtils('h: ' + h);
+
+    const r = bigInt.randBetween(2, p)
+    logUtils('r: ' + r);
+
+    const u = powermod(g, BigInt(r), p)
+    logUtils('u: ' + u);
+
+    const c = await sendBiometricSignature(h, u, g)
+    // todo gửi h, u, g lên server và nhận lại c
+    // const c = bigInt.randBetween(2, p)
+    logUtils('c: ' + c);
+
+    const z = BigInt(r) + BigInt(c) * x
+    logUtils('z: ' + z);
+
+    const isVerify = await verifyBiometricProof(z)
+    // todo gửi z lên server và nhận kết quả
+    logUtils('VT: ' + powermod(g, BigInt(z), p));
+    logUtils('VP: ' + (u * powermod(h,BigInt(c),p)) % p);
+  }
+
+  const sendBiometricSignature = async (h, u, g) => {
+    const body = {
+      user_name: userName,
+      h: h + '',
+      u: u + '',
+      g: g + ''
+    };
+
+    try {
+      const res = await requestBiometricLogin(body);
+      logUtils('requestBiometricLogin res: ' + res)
+      if (res?.data) {
+        return res.data
+      }
+    } catch (error) {
+      logUtils('requestBiometricLogin error: ' + error)
+    }
+    return null
+  };
+
+  const verifyBiometricProof = async (z) => {
+    const body = {
+      user_name: userName,
+      z: z + ''
+    };
+
+    try {
+      const res = await verifyBiometricLogin(body);
+      logUtils('verifyBiometricLogin res: ' + res)
+      if (res?.data.token) {
+        setToken(res?.data.token);
+        await AsyncStorage.setItem(ASYNC_STORE_KEY.USER_NAME, userName);
+        navigation.navigate(NAVIGATION_COMPONENT.DRAWER_NAV);
+      } else {
+        setIsValid(false)
+        setinValidMessage('Sai thông tin đăng nhập!')
+      }
+    } catch (error) {
+      logUtils('verifyBiometricLogin error: ' + error)
+    }
+    return false
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -171,7 +244,8 @@ export default LoginScreen = observer(({navigation}) => {
           style={styles.fingerButton}
           onPress={() => {
             logUtils('Fingerprint');
-            getBiometric()
+            // getBiometric()
+            testBiometricLogin()
           }}>
           <Icon name="fingerprint" size={30} color="#6200ff" />
         </TouchableOpacity>
