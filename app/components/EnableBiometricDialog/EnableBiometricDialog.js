@@ -1,12 +1,36 @@
 import React from 'react';
 import {Modal, Pressable, StyleSheet, Text, View} from "react-native";
 import ReactNativeBiometrics, {BiometryTypes} from "react-native-biometrics";
-import {createMessageSignature, verifyMessageSignature} from "../../utils/secretUtils";
 import {logUtils} from "../../utils/logUtils";
 import {powermod, stringToByteArray} from "../../utils/byteUtils";
+import {addPublicKeyApi} from "../../services";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {ASYNC_STORE_KEY} from "../../constants/asyncStoreKey";
+import {showToast} from "../toast/Toast";
 
 const EnableBiometricDialog = (props) => {
   const rnBiometrics = new ReactNativeBiometrics();
+
+  const registerBiometricAuth = async () => {
+    const bioUserName = await AsyncStorage.getItem(ASYNC_STORE_KEY.USER_NAME)
+
+    const body = {
+      user_name: bioUserName,
+    };
+
+    try {
+      const res = await addPublicKeyApi(body);
+      console.log('res', res);
+      if (res?.data.public_key) {
+        await AsyncStorage.setItem(ASYNC_STORE_KEY.BIO_USER_NAME, res?.data.bioUserName);
+        await AsyncStorage.setItem(ASYNC_STORE_KEY.PUBLIC_KEY, res?.data.public_key);
+        await AsyncStorage.setItem(ASYNC_STORE_KEY.GEN_KEY, res?.data.g);
+        showToast('Đã bật tính năng!')
+      } else {
+        showToast('Có lỗi khi bật tính năng!')
+      }
+    } catch (error) {}
+  };
 
   function getBiometric() {
     rnBiometrics.isSensorAvailable().then(resultObject => {
@@ -33,7 +57,7 @@ const EnableBiometricDialog = (props) => {
   }
 
   function getBiometricSignature() {
-    // Todo sinh signature biometric va gui len server, luu lai vao store de dung sau
+    // Todo call addPublicKeyApi và lưu public_key, gen vào db
     rnBiometrics
       .createSignature({
         promptMessage: 'Đăng nhập',
@@ -47,13 +71,7 @@ const EnableBiometricDialog = (props) => {
 
         if (success) {
           logUtils('signature: ' + signature);
-          createMessageSignature(signature).then(encode => {
-            /* Da co chu ky su dung private key */
-            logUtils('encode: ' + encode);
-            verifyMessageSignature(signature, encode).then(result => {
-              logUtils('verify:' + result);
-            });
-          });
+          registerBiometricAuth()
         }
       });
   }

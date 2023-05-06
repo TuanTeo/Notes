@@ -196,7 +196,7 @@ export default LoginScreen = observer(({navigation}) => {
         navigation.navigate(NAVIGATION_COMPONENT.DRAWER_NAV);
       } else {
         setIsValid(false)
-        setinValidMessage('Sai thông tin đăng nhập!')
+        setinValidMessage('Sai thông tin sinh trắc!')
       }
     } catch (error) {
       logUtils('verifyBiometricLogin error: ' + error)
