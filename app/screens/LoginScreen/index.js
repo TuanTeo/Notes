@@ -14,15 +14,11 @@ import Icon from 'react-native-vector-icons/Entypo';
 import {login, requestBiometricLogin, setToken, verifyBiometricLogin} from '../../services';
 import {logUtils} from '../../utils/logUtils';
 import NAVIGATION_COMPONENT from '../../utils/navConstants';
-import {
-  createMessageSignature,
-  verifyMessageSignature,
-} from '../../utils/secretUtils';
 import {useUserStore} from '../../stores/userStore';
 import {observer} from 'mobx-react-lite';
 import {showToast} from "../../components/toast/Toast";
 import {ASYNC_STORE_KEY} from "../../constants/asyncStoreKey";
-import {powermod} from "../../utils/byteUtils";
+import {powermod, stringToByteArray} from "../../utils/byteUtils";
 import bigInt from "big-integer";
 
 export default LoginScreen = observer(({navigation}) => {
@@ -68,20 +64,16 @@ export default LoginScreen = observer(({navigation}) => {
     rnBiometrics
       .createSignature({
         promptMessage: 'Đăng nhập',
-        payload: '5',
+        payload: 'secret',
       })
       .then(resultObject => {
         const {success, signature} = resultObject;
 
         if (success) {
+          logUtils('x: ' + stringToByteArray(signature));
           console.log('signature: ' + signature);
-          createMessageSignature(signature).then(encode => {
-            /* Da co chu ky su dung private key */
-            logUtils('encode: ' + encode);
-            verifyMessageSignature(signature, encode).then(result => {
-              logUtils('verify:' + result);
-            });
-          });
+
+          handleBiometricLogin(signature)
         }
       });
   }
@@ -133,32 +125,40 @@ export default LoginScreen = observer(({navigation}) => {
     });
   }
 
-  const testBiometricLogin = async () => {
+  const handleBiometricLogin = async (signature) => {
     // Todo x là private, p tạo khi bật settings (cố định), g tự tạo random từ p
-    const x = 1101938n
-    const g = 1000n
-    const p = 254751455037992070664185365042702116014n
-    const h = powermod(g, x, p)
-    logUtils('h: ' + h);
+    try {
+      const x = 1101938n
+      const g = BigInt(await AsyncStorage.getItem(ASYNC_STORE_KEY.GEN_KEY))
+      const p = BigInt(await AsyncStorage.getItem(ASYNC_STORE_KEY.PUBLIC_KEY))
+      logUtils('g: ' + g);
+      logUtils('p: ' + p);
 
-    const r = bigInt.randBetween(2, p)
-    logUtils('r: ' + r);
+      const h = powermod(g, x, p)
+      logUtils('h: ' + h);
 
-    const u = powermod(g, BigInt(r), p)
-    logUtils('u: ' + u);
+      const r = bigInt.randBetween(2, p)
+      logUtils('r: ' + r);
 
-    const c = await sendBiometricSignature(h, u, g)
-    // todo gửi h, u, g lên server và nhận lại c
-    // const c = bigInt.randBetween(2, p)
-    logUtils('c: ' + c);
+      const u = powermod(g, BigInt(r), p)
+      logUtils('u: ' + u);
 
-    const z = BigInt(r) + BigInt(c) * x
-    logUtils('z: ' + z);
+      const c = await sendBiometricSignature(h, u, g)
+      // todo gửi h, u, g lên server và nhận lại c
+      logUtils('c: ' + c);
 
-    const isVerify = await verifyBiometricProof(z)
-    // todo gửi z lên server và nhận kết quả
-    logUtils('VT: ' + powermod(g, BigInt(z), p));
-    logUtils('VP: ' + (u * powermod(h,BigInt(c),p)) % p);
+      const z = BigInt(r) + BigInt(c) * x
+      logUtils('z: ' + z);
+
+      await verifyBiometricProof(z)
+      // todo gửi z lên server và nhận kết quả
+      logUtils('VT: ' + powermod(g, BigInt(z), p));
+      logUtils('VP: ' + (u * powermod(h,BigInt(c),p)) % p);
+
+    } catch (e) {
+      logUtils('Bạn cần đăng nhập để sử dụng tính năng này!')
+      showToast('Bạn cần đăng nhập để sử dụng tính năng này!')
+    }
   }
 
   const sendBiometricSignature = async (h, u, g) => {
@@ -246,7 +246,7 @@ export default LoginScreen = observer(({navigation}) => {
           onPress={() => {
             logUtils('Fingerprint');
             // getBiometric()
-            testBiometricLogin()
+            handleBiometricLogin('test')
           }}>
           <Icon name="fingerprint" size={30} color="#6200ff" />
         </TouchableOpacity>

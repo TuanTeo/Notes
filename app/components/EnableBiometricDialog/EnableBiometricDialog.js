@@ -67,7 +67,6 @@ const EnableBiometricDialog = (props) => {
         const {success, signature} = resultObject;
 
         logUtils('x: ' + stringToByteArray(signature));
-        logUtils('bigint: ' + powermod(2000000573n, 2423423424n, 2000000579n));
 
         if (success) {
           logUtils('signature: ' + signature);
