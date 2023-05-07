@@ -22,9 +22,9 @@ const EnableBiometricDialog = (props) => {
       const res = await addPublicKeyApi(body);
       console.log('res', res);
       if (res?.data.public_key) {
-        await AsyncStorage.setItem(ASYNC_STORE_KEY.BIO_USER_NAME, res?.data.bioUserName);
-        await AsyncStorage.setItem(ASYNC_STORE_KEY.PUBLIC_KEY, res?.data.public_key);
-        await AsyncStorage.setItem(ASYNC_STORE_KEY.GEN_KEY, res?.data.g);
+        await AsyncStorage.setItem(ASYNC_STORE_KEY.BIO_USER_NAME, bioUserName);
+        await AsyncStorage.setItem(ASYNC_STORE_KEY.PUBLIC_KEY, res?.data.public_key + '');
+        await AsyncStorage.setItem(ASYNC_STORE_KEY.GEN_KEY, res?.data.g + '');
         showToast('Đã bật tính năng!')
       } else {
         showToast('Có lỗi khi bật tính năng!')
