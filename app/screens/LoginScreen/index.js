@@ -18,7 +18,7 @@ import {useUserStore} from '../../stores/userStore';
 import {observer} from 'mobx-react-lite';
 import {showToast} from "../../components/toast/Toast";
 import {ASYNC_STORE_KEY} from "../../constants/asyncStoreKey";
-import {powermod, stringToByteArray} from "../../utils/byteUtils";
+import {b64ToBn, powermod} from "../../utils/byteUtils";
 import bigInt from "big-integer";
 
 export default LoginScreen = observer(({navigation}) => {
@@ -70,7 +70,6 @@ export default LoginScreen = observer(({navigation}) => {
         const {success, signature} = resultObject;
 
         if (success) {
-          logUtils('x: ' + stringToByteArray(signature));
           console.log('signature: ' + signature);
 
           handleBiometricLogin(signature)
@@ -128,7 +127,9 @@ export default LoginScreen = observer(({navigation}) => {
   const handleBiometricLogin = async (signature) => {
     // Todo x là private, p tạo khi bật settings (cố định), g tự tạo random từ p
     try {
-      const x = 1101938n
+      const x = b64ToBn(signature)
+      logUtils('x: ' + x)
+
       const g = BigInt(await AsyncStorage.getItem(ASYNC_STORE_KEY.GEN_KEY))
       const p = BigInt(await AsyncStorage.getItem(ASYNC_STORE_KEY.PUBLIC_KEY))
       logUtils('g: ' + g);
@@ -246,7 +247,7 @@ export default LoginScreen = observer(({navigation}) => {
           onPress={() => {
             logUtils('Fingerprint');
             // getBiometric()
-            handleBiometricLogin('test')
+            handleBiometricLogin('1c6dfabdd81321c28196ac21ccaeec5b44a67834df6d7761d308ebdbfdfceb49fad4385d56981dc2e51d99ae5287d090bdba12b24f18e94973352193d0baeb2c1c6dfabdd81321c28196ac21ccaeec5b44a67834df6d7761d308ebdbfdfceb49fad4385d56981dc2e51d99ae5287d090bdba12b24f18e94973352193d0baeb2c')
           }}>
           <Icon name="fingerprint" size={30} color="#6200ff" />
         </TouchableOpacity>

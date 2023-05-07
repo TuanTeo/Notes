@@ -31,6 +31,19 @@ function base64_decode(base64String) {
   return bytes;
 }
 
+function b64ToBn(b64) {
+  var bin = atob(b64);
+  var hex = [];
+
+  bin.split('').forEach(function (ch) {
+    var h = ch.charCodeAt(0).toString(16);
+    if (h.length % 2) { h = '0' + h; }
+    hex.push(h);
+  });
+
+  return BigInt('0x' + hex.join(''));
+}
+
 function powermod(base, exp, p) {
   var result = 1n;
   while (exp !== 0n) {
@@ -41,4 +54,4 @@ function powermod(base, exp, p) {
   return result;
 }
 
-export {stringToByteArray, base64_decode, powermod}
+export {stringToByteArray, base64_decode, powermod, b64ToBn}
