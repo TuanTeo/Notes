@@ -58,21 +58,51 @@ const EnableBiometricDialog = (props) => {
 
   function getBiometricSignature() {
     // Todo call addPublicKeyApi và lưu public_key, gen vào db
-    rnBiometrics
-      .createSignature({
-        promptMessage: 'Đăng nhập',
-        payload: 'secret',
-      })
-      .then(resultObject => {
-        const {success, signature} = resultObject;
+    let epochTimeSeconds = Math.round((new Date()).getTime() / 1000).toString()
+    let payload = epochTimeSeconds + 'some message'
+    rnBiometrics.biometricKeysExist()
+      .then((resultObject) => {
+        const { keysExist } = resultObject
+        if (keysExist) {
+          rnBiometrics
+            .createSignature({
+              promptMessage: 'Đăng nhập',
+              payload: payload,
+            })
+            .then(resultObject => {
+              const {success, signature} = resultObject;
 
-        logUtils('x: ' + stringToByteArray(signature));
+              logUtils('x: ' + stringToByteArray(signature));
 
-        if (success) {
-          logUtils('signature: ' + signature);
-          registerBiometricAuth()
+              if (success) {
+                logUtils('signature: ' + signature);
+                registerBiometricAuth()
+              }
+            });
+        } else {
+          rnBiometrics.createKeys()
+            .then((resultObject) => {
+              const { publicKey } = resultObject
+              logUtils(publicKey)
+
+              rnBiometrics
+                .createSignature({
+                  promptMessage: 'Đăng nhập',
+                  payload: payload,
+                })
+                .then(resultObject => {
+                  const {success, signature} = resultObject;
+
+                  logUtils('x: ' + stringToByteArray(signature));
+
+                  if (success) {
+                    logUtils('signature: ' + signature);
+                    registerBiometricAuth()
+                  }
+                });
+            })
         }
-      });
+      })
   }
 
   return (
@@ -95,7 +125,10 @@ const EnableBiometricDialog = (props) => {
 
             <Pressable
               style={[styles.button, styles.buttonOpen]}
-              onPress={() => getBiometric()}>
+              onPress={() => {
+                getBiometric()
+                // registerBiometricAuth()
+              }}>
               <Text style={styles.textStyle}>Đồng ý</Text>
             </Pressable>
           </View>
