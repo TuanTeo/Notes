@@ -1,8 +1,8 @@
 import axios from 'axios';
 import {logUtils} from '../utils/logUtils';
 
-const DOMAIN = 'http://127.0.0.1:5000';
-// const DOMAIN = 'http://103.226.251.81:5000/'
+// const DOMAIN = 'http://127.0.0.1:5000';
+const DOMAIN = 'http://103.226.251.81:5000/'
 
 let tokenValue = '';
 

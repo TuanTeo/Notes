@@ -23,6 +23,7 @@ import bigInt from "big-integer";
 
 export default LoginScreen = observer(({navigation}) => {
   const [userName, setUserName] = useState('');
+  const [bioUserName, setBioUserName] = useState('');
   const [pass, setPass] = useState('');
   const [loading, setLoading] = useState(false);
   const [isValid, setIsValid] = useState(true)
@@ -56,6 +57,10 @@ export default LoginScreen = observer(({navigation}) => {
       if (value) {
         setUserName(value);
       }
+      const bio = await AsyncStorage.getItem(ASYNC_STORE_KEY.BIO_USER_NAME);
+      if (bio) {
+        setBioUserName(bio);
+      }
     } catch (error) {}
   };
 
@@ -71,7 +76,6 @@ export default LoginScreen = observer(({navigation}) => {
 
         if (success) {
           console.log('signature: ' + signature);
-
           handleBiometricLogin(signature)
         }
       });
@@ -157,7 +161,6 @@ export default LoginScreen = observer(({navigation}) => {
       logUtils('VP: ' + (u * powermod(h,BigInt(c),p)) % p);
 
     } catch (e) {
-      logUtils('Bạn cần đăng nhập để sử dụng tính năng này!')
       showToast('Bạn cần đăng nhập để sử dụng tính năng này!')
     }
   }
@@ -206,6 +209,13 @@ export default LoginScreen = observer(({navigation}) => {
     return false
   };
 
+  const isEnableBioLogin = () => {
+    if (userName && bioUserName && userName === bioUserName) {
+      return true;
+    }
+    return false;
+  }
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -246,8 +256,12 @@ export default LoginScreen = observer(({navigation}) => {
           style={styles.fingerButton}
           onPress={() => {
             logUtils('Fingerprint');
-            // getBiometric()
-            handleBiometricLogin('1c6dfabdd81321c28196ac21ccaeec5b44a67834df6d7761d308ebdbfdfceb49fad4385d56981dc2e51d99ae5287d090bdba12b24f18e94973352193d0baeb2c1c6dfabdd81321c28196ac21ccaeec5b44a67834df6d7761d308ebdbfdfceb49fad4385d56981dc2e51d99ae5287d090bdba12b24f18e94973352193d0baeb2c')
+
+            if (isEnableBioLogin()) {
+              getBiometric()
+            } else {
+              showToast('Bạn cần đăng nhập để sử dụng tính năng này!')
+            }
           }}>
           <Icon name="fingerprint" size={30} color="#6200ff" />
         </TouchableOpacity>

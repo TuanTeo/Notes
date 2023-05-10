@@ -25,7 +25,7 @@ export default HomeScreen = observer(({navigation}) => {
   useEffect(() => {
     logUtils('user', userStore.user.user_id);
     getAllTaskByUser()
-    setModalVisible(true)
+    // setModalVisible(true)
   }, []);
 
   useEffect(() => {
