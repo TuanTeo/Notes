@@ -31,6 +31,11 @@ function base64_decode(base64String) {
   return bytes;
 }
 
+const Buffer = require('buffer/').Buffer;
+function atob(str) {
+  return Buffer.from(str, 'base64').toString('binary');
+}
+
 function b64ToBn(b64) {
   var bin = atob(b64);
   var hex = [];
